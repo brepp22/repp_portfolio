@@ -37,7 +37,7 @@ const handleCityChange = async (city: string) => {
         {cities.map(city => (
             <button 
                 key={city.code} 
-                class="city-button" 
+                class="city-button bg-slate-800" 
                 data-code={city.code}>
                 {city.name}
             </button>
@@ -63,7 +63,6 @@ const handleCityChange = async (city: string) => {
 
 <style>
     .city-button {
-        background-color: rgb(59, 59, 122); 
         color: white; 
         border: none; 
         border-radius: 4px; 
@@ -74,7 +73,7 @@ const handleCityChange = async (city: string) => {
     }
 
     .city-button:hover {
-        background-color: #0056b3; /* Darker blue on hover */
+        color:  #63b3ed; 
     }
 </style>
 
