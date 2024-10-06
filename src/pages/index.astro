@@ -5,14 +5,14 @@ import H1 from '../components/H1.astro'
 import Main from '../components/Main.astro'
 import Accordion from '../components/Accordion.astro'
 import Dropdown from '../components/Dropdown.astro';
+import Toast from '../components/Toast.astro'
 ---
 
 <Layout title="Beighley Repp">
 	<Main>
 		<h3> Hi, my name is </h3> 
-		<div class="flex items-center space-x-9 pb-4">
+		<div class="flex items-center pb-4">
 		<H1 text = "Beighley Repp" />
-		<img src="/images/sunglassesdog.png" alt="Sunglasses Dog" class="w-27 h-40 rounded-full" />
 	</div>
 		<H1 text = "I enjoy building things for the web. " />
 		<h3> I'm a frontend developer and enjoying crafting sites with a smooth user experience. </h3>
@@ -25,7 +25,7 @@ import Dropdown from '../components/Dropdown.astro';
 		  </div> 
 		  <div class="dropdown-container rounded-md border border-white w-[600px] h-[320px] ">
 		  <h2 class="font-mono text-xl text-white text-center py-5">Drop Down</h2>
-		  <Dropdown  
+		  <Dropdown
     			item1="Option 1" 
     			item2="Option 2" 
    				item3="Option 3" 
@@ -33,6 +33,7 @@ import Dropdown from '../components/Dropdown.astro';
     			item5="Option 5" 
 			/>
 			</div>
+			<Toast toast="toast" content="content" />
 
 	</Main>
 </Layout>
@@ -42,8 +43,7 @@ import Dropdown from '../components/Dropdown.astro';
 
 		font-family: monospace;
 		font-size: 20px;
-		padding-bottom: 20px;
-		padding-top: 10px;
+		padding-bottom: 30px;
 		color: rgb(205, 208, 215);
 	}
 

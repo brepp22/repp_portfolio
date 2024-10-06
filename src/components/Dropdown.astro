@@ -1,7 +1,7 @@
 ---
 
 interface Props {
-    title: string;
+    title?: string;
     item1: string;
     item2: string;
     item3: string;
@@ -34,14 +34,12 @@ const { title, item1, item2, item3, item4, item5 } = Astro.props;
     const dropdownItems = document.querySelectorAll('.dropdown-item');
 
    
-    button.addEventListener('click', () => {
+    button?.addEventListener('click', () => {
         isOpen = !isOpen;
-        console.log('Button clicked, isOpen:', isOpen); 
         
         const dropdownMenu = document.querySelector('.dropdown-menu');
-        dropdownMenu.classList.toggle('hidden', !isOpen); 
+        dropdownMenu?.classList.toggle('hidden', !isOpen); 
 
-       
         button.textContent = isOpen ? 'Close' : selectedValue || 'Select an Option';
     });
 
@@ -49,13 +47,12 @@ const { title, item1, item2, item3, item4, item5 } = Astro.props;
     dropdownItems.forEach(item => {
         item.addEventListener('click', (event) => {
             selectedValue = event.target.dataset.value; 
-            console.log('Dropdown item clicked, selectedValue:', selectedValue); 
             
             isOpen = false;
             button.textContent = selectedValue;
 
             const dropdownMenu = document.querySelector('.dropdown-menu');
-            dropdownMenu.classList.add('hidden'); 
+            dropdownMenu?.classList.add('hidden'); 
         });
     });
 </script>

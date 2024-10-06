@@ -1,0 +1,39 @@
+---
+
+interface Props {
+    toast: string;
+    content: string;
+}
+
+const { toast , content } = Astro.props; 
+
+---
+
+<div class="toast relative">
+    <button id="toast-button" class="text-white">Toast</button>
+    <div class="toast-content hidden text-white">
+        <div class="content">{content}</div>
+    </div>
+</div>
+
+<script>
+
+   document.addEventListener('DOMContentLoaded', () => {
+
+    const button = document.getElementById('toast-button')
+    const content = document.querySelector('.toast-content')
+
+    button?.addEventListener('click', () => {
+            if (content) {
+                content.classList.remove('hidden');
+                console.log(content.classList)
+            setTimeout(() => {
+                content.classList.add('hidden');
+                console.log(content.classList)
+                }, 3000);
+        }
+    });
+});
+
+</script>
+
