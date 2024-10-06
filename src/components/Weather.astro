@@ -1,0 +1,115 @@
+---
+interface City {
+    name: string;
+    code: string;
+}
+
+interface Props {
+    areaName: string | null;
+    cities: City[];
+}
+
+const { areaName, cities } = Astro.props; 
+
+let data: any = null;
+let error: string | null = null;
+
+const fetchWeatherData = async (city: string) => {
+    try {
+        const response = await fetch(`https://wttr.in/${city}?format=j1`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        data = await response.json();
+    } catch (err) {
+        error = `Error: ${err.message}`;
+    }
+};
+
+const handleCityChange = async (city: string) => {
+    await fetchWeatherData(city);
+};
+
+---
+
+<div>
+    <div class="flex justify-center space-x-4">
+        {cities.map(city => (
+            <button 
+                key={city.code} 
+                class="city-button" 
+                data-code={city.code}>
+                {city.name}
+            </button>
+        ))}
+    </div>
+
+    <div id="weather-info" class="mt-4">
+        {error ? (
+            <p>Error fetching data: {error}</p>
+        ) : data ? (
+            <div class="mx-auto text-center">
+                <p>Current Temperature: {data.current_condition[0].temp_F} °F</p>
+                <p>Feels Like: {data.current_condition[0].FeelsLikeF} °F</p>
+                <p>Weather Description: {data.current_condition[0].weatherDesc[0].value}</p>
+                <p>Humidity: {data.current_condition[0].humidity}%</p>
+                <p>Wind Speed: {data.current_condition[0].windspeedMiles} mph</p>
+            </div>
+        ) : (
+            <p>Loading ...</p>
+        )}
+    </div>
+</div>
+
+<style>
+    .city-button {
+        background-color: rgb(59, 59, 122); 
+        color: white; 
+        border: none; 
+        border-radius: 4px; 
+        padding: 10px 20px; 
+        cursor: pointer; 
+        transition: background-color 0.3s; 
+        font-family: monospace;
+    }
+
+    .city-button:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+</style>
+
+<script>
+
+    const handleCityChange = async (city) => {
+       
+        try {
+            const response = await fetch(`https://wttr.in/${city}?format=j1`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            console.log('Fetched data:', data); 
+            const weatherInfo = document.getElementById('weather-info');
+            weatherInfo.innerHTML = `
+                <p class='text-white font-mono text-center'>Current Temperature: ${data.current_condition[0].temp_F} °F</p>
+                <p class='text-white font-mono text-center'>Feels Like: ${data.current_condition[0].FeelsLikeF} °F</p>
+                <p class='text-white font-mono text-center'>Weather Description: ${data.current_condition[0].weatherDesc[0].value}</p>
+                <p class='text-white font-mono text-center'>Humidity: ${data.current_condition[0].humidity}%</p>
+                <p class='text-white font-mono text-center'>Wind Speed: ${data.current_condition[0].windspeedMiles} mph</p>
+            `;
+        } catch (err) {
+            console.error('Fetch error:', err); 
+        }
+    };
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const buttons = document.querySelectorAll('.city-button');
+        buttons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const cityCode = event.currentTarget.dataset.code;
+                handleCityChange(cityCode); 
+            });
+        });
+    });
+</script>

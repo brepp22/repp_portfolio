@@ -6,6 +6,8 @@ import Main from '../components/Main.astro'
 import Accordion from '../components/Accordion.astro'
 import Dropdown from '../components/Dropdown.astro';
 import Toast from '../components/Toast.astro'
+import Weather from '../components/Weather.astro'
+
 ---
 
 <Layout title="Beighley Repp">
@@ -37,6 +39,19 @@ import Toast from '../components/Toast.astro'
 				<h2 class="font-mono text-xl text-white text-center py-5">Toast</h2>
 			<Toast toast="toast" content="Your Toast is Ready" />
 			</div>
+
+			<div class="weather-container rounded-md border border-white w-[600px] h-[320px]">
+                <h2 class="font-mono text-xl text-white text-center py-5">Weather</h2>
+				<Weather
+				areaName={null} 
+				cities={[
+					{ name: 'New York', code: 'New York' },
+					{ name: 'San Francisco', code: 'San Francisco' },
+					{ name: 'Chicago', code: 'Chicago' },
+					{ name: 'Miami', code: 'Miami' },
+				]}
+			/>
+            </div>
 
 	</Main>
 </Layout>
