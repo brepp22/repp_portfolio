@@ -11,7 +11,7 @@ import Toast from '../components/Toast.astro'
 <Layout title="Beighley Repp">
 	<Main>
 		<h3> Hi, my name is </h3> 
-		<div class="flex items-center pb-4">
+		<div class="flex items-center">
 		<H1 text = "Beighley Repp" />
 	</div>
 		<H1 text = "I enjoy building things for the web. " />
@@ -23,7 +23,7 @@ import Toast from '../components/Toast.astro'
 			<h3><Accordion title="Second Item" details="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." /></h3>
 			<h3><Accordion title="Third Item" details="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." /></h3>
 		  </div> 
-		  <div class="dropdown-container rounded-md border border-white w-[600px] h-[320px] ">
+		  <div class="dropdown-container rounded-md border border-white w-[600px] h-[320px]">
 		  <h2 class="font-mono text-xl text-white text-center py-5">Drop Down</h2>
 		  <Dropdown
     			item1="Option 1" 
@@ -33,7 +33,10 @@ import Toast from '../components/Toast.astro'
     			item5="Option 5" 
 			/>
 			</div>
-			<Toast toast="toast" content="content" />
+			<div class="toast-container rounded-md border border-white w-[600px] h-[320px] ">
+				<h2 class="font-mono text-xl text-white text-center py-5">Toast</h2>
+			<Toast toast="toast" content="Your Toast is Ready" />
+			</div>
 
 	</Main>
 </Layout>

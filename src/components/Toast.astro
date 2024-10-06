@@ -9,10 +9,11 @@ const { toast , content } = Astro.props;
 
 ---
 
-<div class="toast relative">
-    <button id="toast-button" class="text-white">Toast</button>
-    <div class="toast-content hidden text-white">
-        <div class="content">{content}</div>
+<div class="toast relative flex justify-center">
+    <button id="toast-button" class="text-white mt-2 p-2 rounded-md bg-gray-800 w-[250px] font-mono">Toast</button>
+    <div class="fixed inset-0 flex items-center justify-center z-50 hidden toast-content">
+        <div class="text-white p-4 rounded-md bg-blue-400 w-[250px] font-mono text-center">
+            <div class="content">{content}</div>
     </div>
 </div>
 
@@ -25,15 +26,21 @@ const { toast , content } = Astro.props;
 
     button?.addEventListener('click', () => {
             if (content) {
-                content.classList.remove('hidden');
-                console.log(content.classList)
+                content.classList.remove('hidden');   
+                content.classList.add('animate-shake');
+                content.addEventListener('animationend', () => {
+                content.classList.remove('animate-shake');
+                }, { once: true });
+
             setTimeout(() => {
                 content.classList.add('hidden');
                 console.log(content.classList)
-                }, 3000);
+                }, 2500);
         }
     });
 });
 
 </script>
+
+
 
