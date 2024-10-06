@@ -4,6 +4,7 @@ import Card from '../components/Card.astro';
 import H1 from '../components/H1.astro'
 import Main from '../components/Main.astro'
 import Accordion from '../components/Accordion.astro'
+import Dropdown from '../components/Dropdown.astro';
 ---
 
 <Layout title="Beighley Repp">
@@ -12,12 +13,24 @@ import Accordion from '../components/Accordion.astro'
 		<H1 text = "Beighley Repp" />
 		<H1 text = "I enjoy building things for the web. " />
 		<h3> I'm a frontend developer and enjoying crafting sites with a smooth user experience. </h3>
-		<div class="accordion-container rounded-md border border-white max-w-xl">
+		<div class="flex flex-col md:flex-row justify-evenly items-start space-x-4 pt-7"> 
+		<div class="accordion-container rounded-md border border-white w-[600px]">
 			<h2 class="font-mono text-xl text-white text-center py-5">Accordion</h2>
 			<h3><Accordion title="First Item" details="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." /></h3>
 			<h3><Accordion title="Second Item" details="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." /></h3>
 			<h3><Accordion title="Third Item" details="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." /></h3>
 		  </div> 
+		  <div class="dropdown-container rounded-md border border-white w-[600px] h-[320px] ">
+		  <h2 class="font-mono text-xl text-white text-center py-5">Drop Down</h2>
+		  <Dropdown  
+    			item1="Option 1" 
+    			item2="Option 2" 
+   				item3="Option 3" 
+    			item4="Option 4" 
+    			item5="Option 5" 
+			/>
+			</div>
+
 	</Main>
 </Layout>
 

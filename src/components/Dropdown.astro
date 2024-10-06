@@ -1,0 +1,90 @@
+---
+
+interface Props {
+    title: string;
+    item1: string;
+    item2: string;
+    item3: string;
+    item4: string;
+    item5: string;
+}
+
+const { title, item1, item2, item3, item4, item5 } = Astro.props;
+---
+
+<div class="dropdown relative flex justify-center">
+    <label class="text-white">{title}</label>
+    <button id="dropdown-button" class="mt-2 p-2 rounded-md bg-gray-800 text-white w-[500px] font-mono">Select an Option</button>
+    <div class="dropdown-menu hidden"> 
+        <div class="dropdown-item" data-value={item1}>{item1}</div>
+        <div class="dropdown-item" data-value={item2}>{item2}</div>
+        <div class="dropdown-item" data-value={item3}>{item3}</div>
+        <div class="dropdown-item" data-value={item4}>{item4}</div>
+        <div class="dropdown-item" data-value={item5}>{item5}</div>
+    </div>
+</div>
+
+<script>
+  
+    let isOpen = false; 
+    let selectedValue = ''; 
+
+    // Get references to the button and dropdown items
+    const button = document.getElementById('dropdown-button');
+    const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+    // Toggle dropdown on button click
+    button.addEventListener('click', () => {
+        isOpen = !isOpen;
+        console.log('Button clicked, isOpen:', isOpen); // Log the state of isOpen
+        
+        const dropdownMenu = document.querySelector('.dropdown-menu');
+        dropdownMenu.classList.toggle('hidden', !isOpen); // Show or hide the dropdown menu
+
+        // Update button text
+        button.textContent = isOpen ? 'Close' : selectedValue || 'Select an Option';
+    });
+
+    // Select option and close dropdown
+    dropdownItems.forEach(item => {
+        item.addEventListener('click', (event) => {
+            selectedValue = event.target.dataset.value; // Get value from data attribute
+            console.log('Dropdown item clicked, selectedValue:', selectedValue); // Log the selected value
+            
+            isOpen = false; // Close dropdown after selection
+            button.textContent = selectedValue; // Update button text
+
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            dropdownMenu.classList.add('hidden'); // Hide dropdown menu
+        });
+    });
+</script>
+
+<style>
+    .dropdown-menu {
+        position: absolute; /* Position it absolutely */
+        width: 500px;
+        background: rgb(164, 173, 215); /* Background color */
+        border: 1px solid gray; /* Border for the dropdown */
+        z-index: 1000; /* Ensure it appears above other elements */
+        text:white;
+        font-family: monospace;
+        padding:8px;
+        border-radius: 10px;
+    }
+
+    .dropdown-item {
+        padding: 8px; /* Padding for items */
+        cursor: pointer; /* Pointer cursor for items */
+    }
+
+    .dropdown-item:hover {
+        background-color: rgb(140, 148, 183); /* Hover effect */
+        border-radius: 10px;
+    }
+
+    .hidden {
+        display: none; /* Class to hide elements */
+    }
+</style>
+
