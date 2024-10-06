@@ -2,10 +2,33 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 import H1 from '../components/H1.astro'
+import Main from '../components/Main.astro'
+import Accordion from '../components/Accordion.astro'
 ---
 
-<Layout title="Beighley">
-	<main>
-		<H1 text = "Beighley" />
-	</main>
+<Layout title="Beighley Repp">
+	<Main>
+		<h3> Hi, my name is </h3> 
+		<H1 text = "Beighley Repp" />
+		<H1 text = "I enjoy building things for the web. " />
+		<h3> I'm a frontend developer and enjoying crafting sites with a smooth user experience. </h3>
+		<div class="accordion-container rounded-md border border-white max-w-xl">
+			<h2 class="font-mono text-xl text-white text-center py-5">Accordion</h2>
+			<h3><Accordion title="First Item" details="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." /></h3>
+			<h3><Accordion title="Second Item" details="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." /></h3>
+			<h3><Accordion title="Third Item" details="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." /></h3>
+		  </div> 
+	</Main>
 </Layout>
+
+<style>
+	h3{
+
+		font-family: monospace;
+		font-size: 20px;
+		padding-bottom: 20px;
+		padding-top: 10px;
+		color: rgb(205, 208, 215);
+	}
+
+</style>
