@@ -7,6 +7,7 @@ import Accordion from '../components/Accordion.astro'
 import Dropdown from '../components/Dropdown.astro';
 import Toast from '../components/Toast.astro'
 import Weather from '../components/Weather.astro'
+import Contact from '../components/Contact.astro'
 
 ---
 
@@ -17,8 +18,16 @@ import Weather from '../components/Weather.astro'
 		<H1 text = "Beighley Repp" />
 	</div>
 		<H1 text = "I enjoy building things for the web. " />
-		<h3> I'm a frontend developer and enjoying crafting sites with a smooth user experience. </h3>
-		<div class="flex flex-wrap justify-evenly pt-7 space-y-1.5 px-20"> 
+		<div class="flex flex-wrap skew-x-7 ml-7 max-w-6xl">
+		<h3> I'm a frontend developer and enjoying crafting sites with a smooth user experience from beautiful California. 
+		I love exploring new stacks and find myself learning daily. 
+		</h3>
+		</div>
+		<div class="flex flex-wrap items-center justify-center">
+			<h2 class="text-3xl text-slate-300 font-mono pt-20 pb-20"> I CAN BUILD PRACTICAL THINGS LIKE THIS...</h2>
+			
+	</div>
+		<div class="flex flex-wrap justify-evenly space-y-1.5 px-20 pb-20"> 
 		<div class="accordion-container rounded-md border border-white w-[600px]">
 			<h2 class="font-mono text-xl text-white text-center py-5">Accordion</h2>
 			<h3><Accordion title="First Item" details="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." /></h3>
@@ -52,7 +61,17 @@ import Weather from '../components/Weather.astro'
 				]}
 			/>
             </div>
+			</div>
+			
+			<div class="flex flex-wrap items-center justify-center">
+				<h2 class="text-3xl text-slate-300 font-mono "> AND AM ALWAYS LOOKING TO TRANSFORM CONCEPTS INTO CODE 
+				</h2>
+			</div>
 
+			<div class="flex justify-center items-center pt-20 space-x-4">
+				<Contact imgSrc="images/github-mark-white.png" alt="github" />
+				<Contact imgSrc="images/linkedin-64.png" alt="linkedin" />
+			</div>
 	</Main>
 </Layout>
 
