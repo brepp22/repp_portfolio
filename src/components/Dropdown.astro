@@ -14,7 +14,7 @@ const { title, item1, item2, item3, item4, item5 } = Astro.props;
 
 <div class="dropdown relative flex justify-center">
     <label class="text-white">{title}</label>
-    <button id="dropdown-button" class="mt-2 p-2 rounded-md bg-gray-800 text-white w-[500px] font-mono  hover:text-blue-400">Select an Option</button>
+    <button id="dropdown-button" class="mt-2 p-2 rounded-md bg-gray-800 text-white w-[320px] font-mono  hover:text-blue-400">Select an Option</button>
     <div class="dropdown-menu hidden"> 
         <div class="dropdown-item" data-value={item1}>{item1}</div>
         <div class="dropdown-item" data-value={item2}>{item2}</div>
@@ -60,7 +60,7 @@ const { title, item1, item2, item3, item4, item5 } = Astro.props;
 <style>
     .dropdown-menu {
         position: absolute; 
-        width: 500px;
+        width: 320px;
         background: rgb(164, 173, 215); 
         border: 1px solid gray; 
         z-index: 1000; 
