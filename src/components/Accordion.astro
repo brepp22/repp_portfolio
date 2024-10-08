@@ -8,7 +8,7 @@ const { title, details } = Astro.props;
 
 ---
 
-<div class="accordion group relative">
+<div class="accordion group relative border-box">
     <button
       class="accordion_button flex w-full flex-1 items-center justify-between gap-2 p-3 text-left font-medium transition text-white hover:text-blue-400 sm:px-4"
       type="button"
@@ -23,9 +23,9 @@ const { title, details } = Astro.props;
     <div
       id={`${title}-accordion-content`} 
       aria-labelledby={`${title}-accordion-button`} 
-      class="accordion_content hidden max-h-0 overflow-hidden px-3 transition-all duration-300 ease-in-out sm:px-4 text-white"
+      class="accordion_content hidden max-h-0 overflow-hidden px-3 transition-all duration-300 ease-in-out sm:px-4 text-white border-box"
     >
-      <p class="prose mb-4 mt-1 max-w-full transition-[height]">
+      <p class="mb-0 mt-0 max-w-full transition-[height]">
         {details}
       </p>
     </div>
