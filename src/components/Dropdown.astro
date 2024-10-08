@@ -32,6 +32,7 @@ const { title, item1, item2, item3, item4, item5 } = Astro.props;
 
     const button = document.getElementById('dropdown-button');
     const dropdownItems = document.querySelectorAll('.dropdown-item');
+    const dropdownMenu = document.querySelector('.dropdown-menu')
 
    
     button?.addEventListener('click', () => {
@@ -41,6 +42,8 @@ const { title, item1, item2, item3, item4, item5 } = Astro.props;
         dropdownMenu?.classList.toggle('hidden', !isOpen); 
 
         button.textContent = isOpen ? 'Close' : selectedValue || 'Select an Option';
+
+        event?.stopPropagation()
     });
 
     
@@ -54,6 +57,14 @@ const { title, item1, item2, item3, item4, item5 } = Astro.props;
             const dropdownMenu = document.querySelector('.dropdown-menu');
             dropdownMenu?.classList.add('hidden'); 
         });
+    });
+
+    document.addEventListener('click', (event) => {
+        if (isOpen && !dropdownMenu.contains(event.target) && !button.contains(event.target)) {
+            isOpen = false;
+            dropdownMenu.classList.add('hidden'); 
+            button.textContent = selectedValue || 'Select an Option';
+        }
     });
 </script>
 
