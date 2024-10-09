@@ -30,42 +30,48 @@ const { title, item1, item2, item3, item4, item5 } = Astro.props;
     let selectedValue = ''; 
 
 
-    const button = document.getElementById('dropdown-button');
-    const dropdownItems = document.querySelectorAll('.dropdown-item');
-    const dropdownMenu = document.querySelector('.dropdown-menu')
+    const button = document.getElementById('dropdown-button') as HTMLButtonElement | null;
+    const dropdownItems = document.querySelectorAll('.dropdown-item') as NodeListOf<HTMLElement>;
+    const dropdownMenu = document.querySelector('.dropdown-menu') as HTMLElement | null;
 
    
-    button?.addEventListener('click', () => {
-        isOpen = !isOpen;
-        
-        const dropdownMenu = document.querySelector('.dropdown-menu');
-        dropdownMenu?.classList.toggle('hidden', !isOpen); 
+    if (button && dropdownMenu) {
+    button.addEventListener('click', (event) => {
+      event.stopPropagation(); 
 
-        button.textContent = isOpen ? 'Close' : selectedValue || 'Select an Option';
+      isOpen = !isOpen; 
 
-        event?.stopPropagation()
-    });
+      dropdownMenu.classList.toggle('hidden', !isOpen);
 
     
-    dropdownItems.forEach(item => {
-        item.addEventListener('click', (event) => {
-            selectedValue = event.target.dataset.value; 
-            
-            isOpen = false;
-            button.textContent = selectedValue;
-
-            const dropdownMenu = document.querySelector('.dropdown-menu');
-            dropdownMenu?.classList.add('hidden'); 
-        });
+      button.textContent = isOpen ? 'Close' : selectedValue || 'Select an Option';
     });
+  }
 
-    document.addEventListener('click', (event) => {
-        if (isOpen && !dropdownMenu.contains(event.target) && !button.contains(event.target)) {
-            isOpen = false;
-            dropdownMenu.classList.add('hidden'); 
-            button.textContent = selectedValue || 'Select an Option';
-        }
+  dropdownItems.forEach((item) => {
+    item.addEventListener('click', (event) => {
+  
+      const target = event.target as HTMLElement;
+      selectedValue = target.dataset.value || '';
+
+      isOpen = false; 
+
+      if (button) button.textContent = selectedValue;
+
+      if (dropdownMenu) dropdownMenu.classList.add('hidden');
     });
+  });
+
+  document.addEventListener('click', (event) => {
+   
+    if (isOpen && dropdownMenu && !dropdownMenu.contains(event.target as Node) && button && !button.contains(event.target as Node)) {
+      isOpen = false;
+
+      dropdownMenu.classList.add('hidden');
+      button.textContent = selectedValue || 'Select an Option';
+    }
+  });
+</script>
 </script>
 
 <style>

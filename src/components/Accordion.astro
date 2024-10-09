@@ -34,16 +34,20 @@ const { title, details } = Astro.props;
 <script>
 
   document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('.accordion_button');
+    const buttons = document.querySelectorAll('.accordion_button') as NodeListOf<HTMLButtonElement>;
     const accordionContainer = document.querySelector('.accordion-container'); 
+
+    if (!buttons.length || !accordionContainer) {
+           console.error('Accordion buttons or container not found.');
+           return;
+        }
 
     buttons.forEach(button => {
       button.addEventListener('click', (event) => {
         event.stopPropagation();
 
-        const content = button.nextElementSibling; 
+        const content = button.nextElementSibling as HTMLElement | null; 
         const isExpanded = button.getAttribute('aria-expanded') === 'true';
-
 
         buttons.forEach(otherButton => {
           if (otherButton !== button) {
@@ -51,33 +55,36 @@ const { title, details } = Astro.props;
             otherButton.setAttribute('aria-expanded', 'false');
             otherContent?.classList.add('hidden');
             const otherIcon = otherButton.querySelector('.accordion-icon');
-            otherIcon.textContent = '+'; 
+            if(otherIcon) otherIcon.textContent = '+'; 
           }
         });
     
-        if (isExpanded) {
-          content?.classList.add('hidden');
-        } else {
-          content?.classList.remove('hidden');
-          content.style.maxHeight = content?.scrollHeight + 'px'; 
-        }
-        button.setAttribute('aria-expanded', (!isExpanded).toString()); 
+        if (content) { 
+          if (isExpanded) {
+            content.classList.add('hidden');
+            content.style.maxHeight = '0'; 
+          } else {
+            content.classList.remove('hidden');
+            content.style.maxHeight = content.scrollHeight + 'px'; 
+          }
+          button.setAttribute('aria-expanded', (!isExpanded).toString());
 
-        const icon = button.querySelector('.accordion-icon');
-        icon.textContent = isExpanded ? '+' : '-'; 
+          const icon = button.querySelector('.accordion-icon');
+          if (icon) icon.textContent = isExpanded ? '+' : '-';
+        }
       });
     });
 
 
     document.addEventListener('click', () => {
       buttons.forEach(button => {
-        const content = button.nextElementSibling;
-        if (button.getAttribute('aria-expanded') === 'true') {
+        const content = button.nextElementSibling as HTMLElement | null;
+        if (content && button.getAttribute('aria-expanded') === 'true') {
           button.setAttribute('aria-expanded', 'false');
           content?.classList.add('hidden');
           content.style.maxHeight = '0'; 
           const icon = button.querySelector('.accordion-icon');
-          icon.textContent = '+'; 
+         if(icon) icon.textContent = '+'; 
         }
       });
     });
