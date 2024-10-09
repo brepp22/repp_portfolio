@@ -92,13 +92,23 @@ import Contact from '../components/Contact.astro'
 
 <style>
 	@media (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-    body {
-        font-size: 14px; 
-    }
-}
+		.flex {
+			flex-direction: column; 
+			align-items: center; 
+		}
+		.accordion-container,
+		.dropdown-container,
+		.toast-container,
+		.weather-container {
+			width: 100%; 
+			max-width: none;
+			margin: 0 auto; 
+		}
+		body {
+			font-size: 14px; 
+		}
+	}
+
 	h3{
 
 		font-family: monospace;
