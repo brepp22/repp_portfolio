@@ -10,7 +10,7 @@ import Contact from '../components/Contact.astro'
 
 ---
 
-<Layout title="Beighley Repp">
+<!-- <Layout title="Beighley Repp">
 	<Main>
 		<div class="flex flex-wrap skew-x-7 ml-7 max-w-6xl">
 		<h3> Hi, my name is </h3> 
@@ -114,7 +114,94 @@ import Contact from '../components/Contact.astro'
         body {
             font-size: 12px; 
         }
-    }
+    } -->
+		
+	<Layout title="Beighley Repp">
+		<Main>
+			<div class="flex flex-wrap skew-x-7 ml-7 max-w-6xl md:max-w-4xl lg:max-w-2xl">
+				<h3 class="text-base sm:text-lg md:text-xl lg:text-2xl"> Hi, my name is </h3> 
+			</div>
+	
+			<div class="flex items-center">
+				<H1 text="Beighley Repp" />
+			</div>
+	
+			<H1 text="I enjoy building things for the web." />
+			
+			<div class="flex flex-wrap skew-x-7 ml-7 max-w-7xl md:max-w-4xl lg:max-w-5xl">
+				<h3 class="text-sm sm:text-base md:text-lg lg:text-xl">
+					I'm a frontend developer based in beautiful California, 
+					dedicated to crafting websites that deliver a smooth user experience. 
+					I thrive on exploring new technologies and stacks, and I'm committed to learning every day.
+				</h3>
+			</div>
+	
+		
+			<div class="flex flex-wrap items-center justify-center">
+				<h2 class="text-2xl sm:text-3xl text-slate-300 font-mono pt-20 pb-20"> I CAN BUILD PRACTICAL THINGS LIKE THIS...</h2>
+			</div>
+
+			<div class="flex flex-wrap justify-evenly items-start px-20 pb-20 sm:flex-col sm:px-4 sm:items-center"> 
+				<div class="accordion-container my-1 px-4 py-4 rounded-md border border-white w-[500px] sm:w-[80%]">
+					<h2 class="font-mono text-xl text-white text-center py-5">Accordion</h2>
+					<h3><Accordion title="First Item" details="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." /></h3>
+					<h3><Accordion title="Second Item" details="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." /></h3>
+					<h3><Accordion title="Third Item" details="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." /></h3>
+				</div> 
+				<div class="dropdown-container rounded-md border border-white my-1 px-5 py-5 w-[500px] h-[361px] sm:w-[80%]">
+					<h2 class="font-mono text-xl text-white text-center py-5">Drop Down</h2>
+					<Dropdown
+						title="Select an Option"
+						item1="Option 1" 
+						item2="Option 2" 
+						item3="Option 3" 
+						item4="Option 4" 
+						item5="Option 5" 
+					/>
+				</div>
+				<div class="toast-container rounded-md border border-white my-1 px-5 py-5 w-[500px] h-[361px] sm:w-[80%]">
+					<h2 class="font-mono text-xl text-white text-center py-5">Toast</h2>
+					<Toast toast="toast" content="Your Toast is Ready" />
+				</div>
+			
+				<div class="weather-container rounded-md border border-white my-1 px-5 py-5 w-[500px] h-[361px] sm:w-[80%]">
+					<h2 class="font-mono text-xl text-white text-center py-5">Weather</h2>
+					<Weather
+						areaName={null} 
+						cities={[
+							{ name: 'New York', code: 'New York' },
+							{ name: 'San Francisco', code: 'San Francisco' },
+							{ name: 'Chicago', code: 'Chicago' },
+							{ name: 'Miami', code: 'Miami' },
+						]}
+					/>
+				</div>
+			</div>
+			
+			<div class="flex flex-wrap items-center justify-center">
+				<h2 class="text-3xl text-slate-300 font-mono "> AND AM ALWAYS LOOKING TO TRANSFORM CONCEPTS INTO CODE 
+				</h2>
+			</div>
+
+			<div class="pt-20 flex justify-center">
+			<h4 class="text-slate-300 font-mono"> Find Me At :</h4>
+			</div>
+
+			<div class="flex justify-center items-center pt-1 space-x-4">
+				<a href="https://github.com/brepp22" target="_blank" rel="noopener noreferrer">
+					<Contact imgSrc="/images/github-mark-white.png" alt="github" />
+				</a>
+				<a href="https://www.linkedin.com/in/beighleyrepp/" target="_blank" rel="noopener noreferrer">
+					<Contact imgSrc="/images/linkedin-64.png" alt="linkedin" />
+				</a>
+			</div>
+			<div class="pt-3 flex justify-center">
+				<h4 class="text-slate-300 font-mono text-sm"> Crafted in 2024</h4>
+				</div>
+	</Main>
+</Layout>
+		
+<style>
 
 	h3{
 
