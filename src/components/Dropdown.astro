@@ -75,23 +75,6 @@ const { title, item1, item2, item3, item4, item5 } = Astro.props;
 </script>
 
 <style>
-  @media (max-width: 600px) {
-    .dropdown-menu {
-        width: 90%; 
-        left: 50%;
-        transform: translateX(-50%); 
-        padding: 10px; 
-        box-sizing: border-box;
-        max-height: 400px;
-        overflow-y:auto;
-    }
-    .dropdown-item {
-        width: 100%; 
-        padding: 5px 10px; 
-        box-sizing: border-box;
-    }
-}
-
     .dropdown-menu {
         position: absolute; 
         width: 320px;
@@ -117,6 +100,19 @@ const { title, item1, item2, item3, item4, item5 } = Astro.props;
     .hidden {
         display: none; 
     }
+
+    @media (max-width: 600px) {
+    .dropdown-menu {
+        width: 90%; 
+        left: 50%; 
+        transform: translateX(-50%); 
+        padding: 10px; 
+    }
+    .dropdown-item {
+        width: 100%; 
+        padding: 10px; 
+    }
+}
 
 </style>
 
