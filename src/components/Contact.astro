@@ -10,5 +10,7 @@ const {imgSrc, alt } = Astro.props;
 ---
 
 <div class="flex justify-center">
-    <img src={imgSrc} alt={alt} class="w-12 h-12 " />
+    <img src={imgSrc} alt={alt} 
+    class="w-12 h-12 md:w-10 md:h-10 sm:w-8 sm:h-8 transition-all duration-300" 
+    />
 </div>
