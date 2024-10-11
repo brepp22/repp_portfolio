@@ -73,7 +73,7 @@ import Contact from '../components/Contact.astro'
 			<h4 class="text-slate-300 font-mono"> Find Me At :</h4>
 			</div>
 
-			<div class="flex justify-center items-center pt-1 space-x-4">
+			<div class="social-links flex justify-center items-center pt-1 space-x-4">
 				<a href="https://github.com/brepp22" target="_blank" rel="noopener noreferrer">
 					<Contact imgSrc="/images/github-mark-white.png" alt="github" />
 				</a>
@@ -124,14 +124,14 @@ import Contact from '../components/Contact.astro'
         body {
             font-size: 12px; 
         }
-		a {
-			display:inline-flex;
-			margin: 0 5px;
-
+		.social-links{
+			justify-content: space-around;
+			padding: 10px;
 		}
-		img{
+
+		.social-links a img {
 			max-width: 50px;
-			max-height:50px;
+			max-height: 50px;
 		}
     }
 
