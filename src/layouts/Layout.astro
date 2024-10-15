@@ -8,6 +8,8 @@ interface Props {
 const { title, 
 	description = "Beighley's Portfolio Site",
  	image = "/images/portfolio.jpg" } = Astro.props;
+
+import Nav from '../components/Nav.astro';
 ---
 
 <!doctype html>
@@ -22,6 +24,7 @@ const { title,
 		<title>{title}</title>
 	</head>
 	<body class="min-h-screen">
+		<Nav />
 		<slot />
 	</body>
 </html>

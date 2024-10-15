@@ -1,11 +1,14 @@
 ---
 interface Props {
-    title: string;
-    details: string;
+    title?: string;
+    details?: string;
+    link?: string;
 }
 
-const { title, details } = Astro.props;
+const { title, details, link } = Astro.props;
 
+const detailsArray = details.split('\n');
+const linksArray = link ? link.split('\n') : [];
 ---
 
 <div class="accordion group relative border-box">
@@ -25,9 +28,15 @@ const { title, details } = Astro.props;
       aria-labelledby={`${title}-accordion-button`} 
       class="accordion_content hidden max-h-0 overflow-hidden px-3 transition-all duration-300 ease-in-out sm:px-4 text-white border-box"
     >
+    {detailsArray.map((detail, index) => (
       <p class="mb-0 mt-0 max-w-full transition-[height]">
-        {details}
+          {linksArray[index] ? (
+              <a href={linksArray[index]} class="text-blue-400 underline">{detail}</a>
+          ) : (
+              detail
+          )}
       </p>
+  ))}
     </div>
 </div>
 

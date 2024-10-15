@@ -1,0 +1,28 @@
+---
+
+interface Props {
+
+}
+
+const {} = Astro.props;
+
+import Accordion from './Accordion.astro';
+
+---
+
+<header>
+    <Accordion 
+    details="Home\nContact" 
+    link="/\n/contact"              
+/>
+   
+   
+</header>
+
+<style>
+    header {
+        background-color: #333; /* Dark background for the header */
+        padding: 1rem; /* Padding around the header */
+    }
+
+</style>
