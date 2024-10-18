@@ -14,12 +14,14 @@ import Dropdown from './Dropdown.astro';
 
 <header>
     <Accordion 
+        title="Menu" 
         details="Home\nContact" 
-        link="/\n/contact"
+        link="/\n/contact" 
     >
+
         <Dropdown 
             title="Contact Options" 
-            items={["Email"]}
+            items={["Email", "Social"]}
             links={['/contact/email']} 
         />
     </Accordion>
@@ -29,6 +31,8 @@ import Dropdown from './Dropdown.astro';
     header {
         background-color: #333; 
         padding: 1rem; 
+        font-family: monospace;
+        font-size: 15px;
     }
 
 </style>
