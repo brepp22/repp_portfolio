@@ -7,16 +7,22 @@ interface Props {
 const {} = Astro.props;
 
 import Accordion from './Accordion.astro';
+import Dropdown from './Dropdown.astro';
+
 
 ---
 
 <header>
     <Accordion 
-    details="Home\nContact" 
-    link="/\n/contact"              
-/>
-   
-   
+        details="Home\nContact" 
+        link="/\n/contact"
+    >
+        <Dropdown 
+            title="Contact Options" 
+            items={["Email"]}
+            links={['/contact/email']} 
+        />
+    </Accordion>
 </header>
 
 <style>

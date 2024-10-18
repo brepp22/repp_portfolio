@@ -36,14 +36,8 @@ import Contact from '../components/Contact.astro'
 		  </div> 
 		  <div class="dropdown-container rounded-md border border-white w-[600px] h-[361px] my-1 px-5 py-5 ">
 		  <h2 class="font-mono text-xl text-white text-center py-5">Drop Down</h2>
-		  <Dropdown
-				title="Select an Option"
-    			item1="Option 1" 
-    			item2="Option 2" 
-   				item3="Option 3" 
-    			item4="Option 4" 
-    			item5="Option 5" 
-			/>
+    			<Dropdown title="Select an Option" 
+				items={["Select an Option", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]} />
 			</div>
 			<div class="toast-container rounded-md border border-white w-[600px] h-[361px] my-1 px-5 py-5 ">
 				<h2 class="font-mono text-xl text-white text-center py-5">Toast</h2>

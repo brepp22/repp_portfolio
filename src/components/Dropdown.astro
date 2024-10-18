@@ -1,77 +1,70 @@
 ---
-
 interface Props {
     title?: string;
-    item1: string;
-    item2: string;
-    item3: string;
-    item4: string;
-    item5: string;
+    items: string[];
+    links?: string[];
 }
 
-const { title, item1, item2, item3, item4, item5 } = Astro.props;
+const { title, items = [], links = [] } = Astro.props;
 ---
 
 <div class="dropdown relative flex justify-center">
-    <button id="dropdown-button" class="mt-2 p-2 rounded-md bg-gray-800 text-white w-[320px] font-mono  hover:text-blue-400">Select an Option</button>
-    <div class="dropdown-menu hidden"> 
-        <div class="dropdown-item" data-value={title}>{title}</div>
-        <div class="dropdown-item" data-value={item1}>{item1}</div>
-        <div class="dropdown-item" data-value={item2}>{item2}</div>
-        <div class="dropdown-item" data-value={item3}>{item3}</div>
-        <div class="dropdown-item" data-value={item4}>{item4}</div>
-        <div class="dropdown-item" data-value={item5}>{item5}</div>
+    <button id="dropdown-button" class="mt-2 p-2 rounded-md bg-gray-800 text-white w-[320px] font-mono hover:text-blue-400"
+        aria-haspopup="true"
+        aria-expanded="false"
+    >
+        {title || 'Select an Option'}
+    </button>
+    <div class="dropdown-menu hidden">
+        {items.map((item, index) => (
+            <div class="dropdown-item" data-value={item}>
+                <a href={links[index]}>
+                    {item}
+                </a>
+            </div>
+        ))}
     </div>
 </div>
 
 <script>
-  
-    let isOpen = false; 
-    let selectedValue = ''; 
+    document.addEventListener('DOMContentLoaded', () => {
+        let isOpen = false; 
+        let selectedValue = ''; 
+
+        const button = document.getElementById('dropdown-button') as HTMLButtonElement | null;
+        const dropdownMenu = document.querySelector('.dropdown-menu') as HTMLElement | null;
+
+        if (button && dropdownMenu) {
+            button.addEventListener('click', (event) => {
+                event.stopPropagation(); 
+                isOpen = !isOpen; 
+                dropdownMenu.classList.toggle('hidden', !isOpen);
+                button.textContent = isOpen ? 'Close' : selectedValue || 'Select an Option';
+            });
+
+            dropdownMenu.addEventListener('click', (event) => {
+
+              const target = event.target as HTMLElement | null;
+              const dropdownItem = target?.closest('.dropdown-item') as HTMLElement | null;
+
+               if (dropdownItem) {
+               selectedValue = dropdownItem.dataset.value || '';
+               isOpen = false; 
+               button.textContent = selectedValue || 'Select an Option';
+              dropdownMenu.classList.add('hidden');
+             }
+          });
 
 
-    const button = document.getElementById('dropdown-button') as HTMLButtonElement | null;
-    const dropdownItems = document.querySelectorAll('.dropdown-item') as NodeListOf<HTMLElement>;
-    const dropdownMenu = document.querySelector('.dropdown-menu') as HTMLElement | null;
-
-   
-    if (button && dropdownMenu) {
-    button.addEventListener('click', (event) => {
-      event.stopPropagation(); 
-
-      isOpen = !isOpen; 
-
-      dropdownMenu.classList.toggle('hidden', !isOpen);
-
-    
-      button.textContent = isOpen ? 'Close' : selectedValue || 'Select an Option';
+        document.addEventListener('click', (event) => {
+            if (isOpen && dropdownMenu && !dropdownMenu.contains(event.target as Node) && button && !button.contains(event.target as Node)) {
+                isOpen = false;
+                dropdownMenu.classList.add('hidden');
+                button.textContent = selectedValue || 'Select an Option';
+              }
+            });
+        } 
     });
-  }
-
-  dropdownItems.forEach((item) => {
-    item.addEventListener('click', (event) => {
-  
-      const target = event.target as HTMLElement;
-      selectedValue = target.dataset.value || '';
-
-      isOpen = false; 
-
-      if (button) button.textContent = selectedValue;
-
-      if (dropdownMenu) dropdownMenu.classList.add('hidden');
-    });
-  });
-
-  document.addEventListener('click', (event) => {
-   
-    if (isOpen && dropdownMenu && !dropdownMenu.contains(event.target as Node) && button && !button.contains(event.target as Node)) {
-      isOpen = false;
-
-      dropdownMenu.classList.add('hidden');
-      button.textContent = selectedValue || 'Select an Option';
-    }
-  });
-</script>
 </script>
 
 <style>
@@ -81,9 +74,9 @@ const { title, item1, item2, item3, item4, item5 } = Astro.props;
         background: rgb(164, 173, 215); 
         border: 1px solid gray; 
         z-index: 1000; 
-        text:white;
+        text: white;
         font-family: monospace;
-        padding:8px;
+        padding: 8px;
         border-radius: 10px;
     }
 
@@ -100,23 +93,6 @@ const { title, item1, item2, item3, item4, item5 } = Astro.props;
     .hidden {
         display: none; 
     }
-
-    @media (max-width: 600px) {
-    .dropdown-menu {
-        width: 85%; 
-        left: 50%; 
-        transform: translateX(-50%); 
-        padding: 6px; 
-        box-sizing: border-box;
-        max-height: 300px;
-        overflow-y: auto;
-    }
-    .dropdown-item {
-        width: 100%; 
-        padding: 5px 10px;
-        box-sizing: border-box; 
-    }
-}
-
 </style>
+
 

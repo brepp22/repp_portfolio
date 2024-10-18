@@ -1,11 +1,14 @@
 ---
+import type { JsxElement } from 'typescript';
+
 interface Props {
     title?: string;
     details?: string;
     link?: string;
+    children?: any;
 }
 
-const { title, details, link } = Astro.props;
+const { title, details, link, children } = Astro.props;
 
 const detailsArray = details?.split('\n');
 const linksArray = link ? link.split('\n') : [];
@@ -37,6 +40,9 @@ const linksArray = link ? link.split('\n') : [];
           )}
       </p>
   ))}
+      <div class="dropdowns-container">
+        {children}
+    </div>
     </div>
 </div>
 
@@ -100,3 +106,13 @@ const linksArray = link ? link.split('\n') : [];
   });
 
 </script>
+<style>
+
+.dropdowns-container_.hidden {
+  display: none;
+}
+.dropdowns-container {
+        margin-top: 10px; 
+    }
+
+</style>
