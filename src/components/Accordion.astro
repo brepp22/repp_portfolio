@@ -7,7 +7,7 @@ interface Props {
 
 const { title, details, link } = Astro.props;
 
-const detailsArray = details.split('\n');
+const detailsArray = details?.split('\n');
 const linksArray = link ? link.split('\n') : [];
 ---
 
@@ -28,10 +28,10 @@ const linksArray = link ? link.split('\n') : [];
       aria-labelledby={`${title}-accordion-button`} 
       class="accordion_content hidden max-h-0 overflow-hidden px-3 transition-all duration-300 ease-in-out sm:px-4 text-white border-box"
     >
-    {detailsArray.map((detail, index) => (
+    {detailsArray?.map((detail, index) => (
       <p class="mb-0 mt-0 max-w-full transition-[height]">
           {linksArray[index] ? (
-              <a href={linksArray[index]} class="text-blue-400 underline">{detail}</a>
+              <a href={linksArray[index]} class="text-white font-mono hover:text-blue-400 py-2">{detail}</a>
           ) : (
               detail
           )}
