@@ -17,7 +17,7 @@ const { title, items = [], links = [] } = Astro.props;
     </button>
     <div class="dropdown-menu hidden">
         {items.map((item, index) => (
-            <div class="dropdown-item" data-value={item}>
+            <div class="dropdown-item text-white"  data-value={item}>
                 {links[index] ? (
                     <a href={links[index]} class="block">{item}</a>
                 ) : (
@@ -75,13 +75,12 @@ const { title, items = [], links = [] } = Astro.props;
     .dropdown-menu {
         position: absolute; 
         width: 320px;
-        background: rgb(164, 173, 215); 
+        background: #454978; 
         border: 1px solid gray; 
         z-index: 1000; 
         font-family: monospace;
         padding: 8px;
         border-radius: 10px;
-        top:20%;
         overflow:visible;
     }
 
@@ -91,7 +90,7 @@ const { title, items = [], links = [] } = Astro.props;
     }
 
     .dropdown-item:hover {
-        background-color: rgb(140, 148, 183); 
+        background-color: rgb(115, 126, 174); 
         border-radius: 10px;
     }
     .hidden {
