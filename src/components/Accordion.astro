@@ -4,12 +4,18 @@ interface Props {
     title?: string;
     details?: string;
     link?: string;
+    dropdownItems?: string[];
+    dropdownLinks?: string[];
 }
 
-const { title, details, link } = Astro.props;
+const { title, details, link, dropdownItems = [], dropdownLinks = [] } = Astro.props;
 
 const detailsArray = details?.split('\n');
 const linksArray = link ? link.split('\n') : [];
+
+console.log(dropdownItems, dropdownLinks)
+
+import Dropdown from './Dropdown.astro';
 ---
 
 <div class="accordion group relative border-box">
@@ -31,11 +37,19 @@ const linksArray = link ? link.split('\n') : [];
     >
     {detailsArray?.map((detail, index) => (
       <p class="mb-0 mt-0 max-w-full transition-[height]">
-          {linksArray[index] ? (
-              <a href={linksArray[index]} class="text-white font-mono hover:text-blue-400 my-4 block">{detail}</a>
-          ) : (
-              detail
-          )}
+     {detail === "Home" ? (
+                <a href={linksArray[index]} class="text-white font-mono hover:text-blue-400 my-4 block">{detail}</a>
+            ) : detail === "Contact" ? (
+                <span class="text-white font-mono my-4 block">
+                    <Dropdown 
+                        title="Contact Options" 
+                        items={dropdownItems} 
+                        links={dropdownLinks}
+                    />
+                </span>
+            ) : (
+                <span class="text-white font-mono my-4 block">{detail}</span>
+            )}
       </p>
   ))}
     </div>
@@ -102,7 +116,15 @@ const linksArray = link ? link.split('\n') : [];
 
 </script>
 <style>
+.accordion_content {
+    max-height: 0; 
+    overflow: hidden; 
+    transition: max-height 0.3s ease-out;
+}
 
+.accordion_content:not(.hidden) {
+    overflow: visible; 
+}
 .dropdowns-container_.hidden {
   display: none;
 }
