@@ -17,10 +17,12 @@ const { title, items = [], links = [] } = Astro.props;
     </button>
     <div class="dropdown-menu hidden">
         {items.map((item, index) => (
-            <div class="dropdown-item" data-value={item}>
-                <a href={links[index]}>
-                    {item}
-                </a>
+           <div class="dropdown-item" data-value={item} class="block" >
+                {links[index] ? (
+                    <a href={links[index]}>{item}</a>
+                ) : (
+                    <span>{item}</span>
+                )}
             </div>
         ))}
     </div>
@@ -28,6 +30,7 @@ const { title, items = [], links = [] } = Astro.props;
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+     
         let isOpen = false; 
         let selectedValue = ''; 
 

@@ -1,32 +1,18 @@
 ---
 
-interface Props {
-
-}
-
-const {} = Astro.props;
-
 import Accordion from './Accordion.astro';
 import Dropdown from './Dropdown.astro';
 
-
 ---
-
 <header>
-    <Accordion 
-        title="Menu" 
-        details="Home\nContact" 
-        link="/\n/contact" 
-    >
+<Accordion 
+    title="Menu" 
+    details="Home\nContact" 
+    link="/\n/contact"
+> </Accordion>
 
-        <Dropdown 
-            title="Contact Options" 
-            items={["Email", "Social"]}
-            links={['/contact/email']} 
-        />
-    </Accordion>
+
 </header>
-
 <style>
     header {
         background-color: #333; 
@@ -34,5 +20,6 @@ import Dropdown from './Dropdown.astro';
         font-family: monospace;
         font-size: 15px;
     }
+ 
 
 </style>
