@@ -1,0 +1,109 @@
+---
+
+const email = "brepp@hotmail.com"
+---
+<form class="email-form" id="email-form">
+    <label for="from">Your Email:</label>
+    <input type="email" id="from" name="from" required />
+
+    <label for="to">Recipient Email:</label>
+    <input type="email" value={email} readonly/>
+
+    <label for="subject">Subject:</label>
+    <input type="text" id="subject" name="subject" required />
+
+
+    <label for="text">Plain Text Content:</label>
+    <textarea id="text" name="text" required></textarea>
+
+    <button type="submit" class="email-button">Send Email</button>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('email-form') as HTMLFormElement; 
+        if (form) {
+            form.addEventListener('submit', async (event: Event) => {
+                event.preventDefault();
+
+                const formData = new FormData(form); 
+                const data = Object.fromEntries(formData);
+
+                try {
+                    const response = await fetch('/api/sendEmail.json', {
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data),
+                    });
+
+                    const result = await response.json();
+                    if (response.ok) {
+                        alert(result.message); 
+                    } else {
+                        alert(`Error: ${result.message}`); 
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error sending email.');
+                }
+            });
+        } else {
+            console.error('Form not found');
+        }
+    });
+</script>
+
+<style>
+    body {
+        font-family: monospace; 
+     
+    }
+
+    .email-form {
+        max-width: 600px; 
+        margin: 0 auto; 
+        background: #fff;
+        padding: 20px;
+      
+      
+    }
+
+    .email-form label {
+        display: block; 
+        margin-bottom: 5px; 
+        font-weight: bold;
+    }
+
+    .email-form input,
+    .email-form textarea {
+        width: 100%; 
+        padding: 10px; 
+        margin-bottom: 15px; 
+        border: 1px solid #ccc; 
+        border-radius: 4px; 
+        font-size: 16px; 
+    }
+
+    .email-form button {
+        background-color: #42678e; 
+        color: #fff;
+        padding: 10px 15px; 
+        border: none; 
+        border-radius: 4px; 
+        cursor: pointer; 
+        font-size: 16px; 
+    }
+
+    .email-form button:hover {
+        background-color: #0056b3;
+    }
+
+    .email-form textarea {
+        resize: vertical; 
+        height: 100px; 
+    }
+</style>
+
+  

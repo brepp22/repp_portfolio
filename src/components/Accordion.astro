@@ -12,8 +12,10 @@ const { title, details, link } = Astro.props;
 const detailsArray = details?.split('\n');
 const linksArray = link ? link.split('\n') : [];
 
----
+console.log('Accordion Props:', { title, details, link });
 
+---
+<div class = "accordion-container">
 <div class="accordion group relative border-box">
     <button
       class="accordion_button flex w-full flex-1 items-center justify-between gap-2 p-3 text-left font-medium transition text-white hover:text-blue-400 sm:px-4"
@@ -41,8 +43,8 @@ const linksArray = link ? link.split('\n') : [];
       </p>
   ))}
     </div>
+  </div>
 </div>
-
 <script>
 
   document.addEventListener('DOMContentLoaded', () => {
