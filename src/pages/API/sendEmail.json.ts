@@ -6,17 +6,18 @@ const resend = new Resend(import.meta.env.RESEND_API_KEY);
 export const POST: APIRoute = async ({ request }) => {
     try {
         const body = await request.json();
-        const { to, from, html, subject, text } = body;
+        const { to, from, subject, text } = body;
 
-        console.log({ to, from, html, subject, text });
+        console.log({ to, from, subject, text });
 
         const response = await resend.emails.send({
-            to,
+            to: "brepp@hotmail.com",
             from,
             subject,
-            html,
             text,
         });
+        
+        console.log('Resend response:', response);
 
         if (response) {
             return new Response(
