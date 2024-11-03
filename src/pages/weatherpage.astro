@@ -70,17 +70,20 @@ let selectedRegion: Region = 'Pacific Northwest';
 
         const weatherContainer = document.getElementById('weather-container');
         if (weatherContainer) {
+            weatherContainer.innerHTML = '';
+            const weatherComponent = document.createElement('div');
             const citiesArray = regions[typedRegion]; 
-            const citiesString = JSON.stringify(citiesArray); 
-    weatherContainer.innerHTML = `
-        <Weather areaName="${region}" cities='${citiesString}' />
-    `;
+            console.log(citiesArray) 
+             weatherComponent.setAttribute('data-area-name', region);
+            weatherComponent.setAttribute('data-cities', JSON.stringify(citiesArray));
+          
+         weatherContainer.appendChild(weatherComponent);
+         console.log(weatherContainer)
+        } else {
+            console.error("Weather container not found!");
+        }
+    }
 
-    console.log('Updated weather container:', weatherContainer);
-} else {
-    console.error("Weather container not found!");
-}
-}
     
 
     document.addEventListener('DOMContentLoaded', () => {
