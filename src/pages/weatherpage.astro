@@ -70,16 +70,16 @@ let selectedRegion: Region = 'Pacific Northwest';
 
         const weatherContainer = document.getElementById('weather-container');
         if (weatherContainer) {
-            const citiesString = JSON.stringify(cities);
-        weatherContainer.innerHTML = `
-            <astro-island>
-                <Weather areaName="${region}" cities='${citiesString.replace(/"/g, '&quot;')}' />
-            </astro-island>
-        `;
-        console.log('Updated weather container:', weatherContainer.innerHTML);
-    } else {
-        console.error("Weather container not found!");
-    }
+            const citiesArray = regions[typedRegion]; 
+            const citiesString = JSON.stringify(citiesArray); 
+    weatherContainer.innerHTML = `
+        <Weather areaName="${region}" cities='${citiesString}' />
+    `;
+
+    console.log('Updated weather container:', weatherContainer);
+} else {
+    console.error("Weather container not found!");
+}
 }
     
 
