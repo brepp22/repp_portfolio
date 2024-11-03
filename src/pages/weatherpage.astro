@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/Layout.astro"
+import Main from "../components/Main.astro"
+import Weather from "../components/Weather.astro"
+import Dropdown from "../components/Dropdown.astro"
+
+const cities = [
+    'San Francisco',
+    'New York' ,
+    'Chicago' ,
+    'Miami' ,
+]
+
+let selectedCity = null;
+
+const handleCitySelection = (city : string) => {
+    selectedCity = city;
+};
+---
+
+<Layout title = "Weather Page">
+    <Main>
+     
+    </Main>
+
+
+</Layout>
