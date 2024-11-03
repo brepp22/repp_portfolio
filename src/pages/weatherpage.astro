@@ -4,24 +4,100 @@ import Main from "../components/Main.astro"
 import Weather from "../components/Weather.astro"
 import Dropdown from "../components/Dropdown.astro"
 
-const cities = [
-    'San Francisco',
-    'New York' ,
-    'Chicago' ,
-    'Miami' ,
-]
+type Region = 'Pacific Northwest' | 'West Mountain' | 'West North Central' | 'West South Central' | 'East South Central' | 'East North Central' | 'Middle Atlantic'
+| 'South Atlantic' | 'North East' ;
 
-let selectedCity = null;
+let areaItems : Region[] = [
+  'Pacific Northwest', 'West Mountain', 'West North Central', 'West South Central',
+  'East South Central', 'East North Central', 'Middle Atlantic', 'South Atlantic', 'North East'
+];
 
-const handleCitySelection = (city : string) => {
-    selectedCity = city;
+const regions: Record<Region, { name: string; code: string; }[]> = {
+  'Pacific Northwest': [{ name: 'Seattle', code: 'Seattle' }, { name: 'Portland', code: 'Portland' }],
+  'West Mountain': [{ name: 'Denver', code: 'Denver' }, { name: 'Salt Lake City', code: 'SaltLakeCity' }],
+  'West North Central': [{ name: 'Minneapolis', code: 'Minneapolis' }, { name: 'Kansas City', code: 'KansasCity' }],
+  'West South Central': [],
+  'East South Central': [], 
+  'East North Central': [], 
+  'Middle Atlantic': [], 
+  'South Atlantic': [], 
+  'North East': [] 
 };
+
+let selectedRegion: Region = 'Pacific Northwest';
+let cities = regions[selectedRegion];
+
 ---
 
 <Layout title = "Weather Page">
     <Main>
      
+        <Dropdown items={areaItems} />
+            <div id="weather-container">
+                <Weather areaName={selectedRegion} cities={cities}/>
+            </div>
     </Main>
 
 
 </Layout>
+
+<script>
+
+type Region = 'Pacific Northwest' | 'West Mountain' | 'West North Central' | 'West South Central' | 'East South Central' | 'East North Central' | 'Middle Atlantic'
+| 'South Atlantic' | 'North East' ;
+
+const regions: Record<Region, { name: string; code: string; }[]> = {
+  'Pacific Northwest': [{ name: 'Seattle', code: 'Seattle' }, { name: 'Portland', code: 'Portland' }],
+  'West Mountain': [{ name: 'Denver', code: 'Denver' }, { name: 'Salt Lake City', code: 'SaltLakeCity' }],
+  'West North Central': [{ name: 'Minneapolis', code: 'Minneapolis' }, { name: 'Kansas City', code: 'KansasCity' }],
+  'West South Central': [],
+  'East South Central': [], 
+  'East North Central': [], 
+  'Middle Atlantic': [], 
+  'South Atlantic': [], 
+  'North East': [] 
+};
+
+let selectedRegion: Region = 'Pacific Northwest';
+
+
+    function onRegionSelect(region: string) {
+        const typedRegion = region as Region;
+        selectedRegion = typedRegion
+        const cities = regions[typedRegion];
+
+        console.log(cities)
+
+        const weatherContainer = document.getElementById('weather-container');
+        if (weatherContainer) {
+            const citiesString = JSON.stringify(cities);
+        weatherContainer.innerHTML = `
+            <astro-island>
+                <Weather areaName="${region}" cities='${citiesString.replace(/"/g, '&quot;')}' />
+            </astro-island>
+        `;
+        console.log('Updated weather container:', weatherContainer.innerHTML);
+    } else {
+        console.error("Weather container not found!");
+    }
+}
+    
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const dropdown = document.querySelector('.dropdown') as HTMLElement | null;
+
+        if (dropdown) {
+            dropdown.addEventListener('regionSelected', (event) => {
+                const selectedRegion = (event as CustomEvent).detail;
+                onRegionSelect(selectedRegion);
+                console.log(selectedRegion)
+            });
+        } else {
+            console.error("Dropdown not found!");
+        }
+    });
+</script>
+  
+
+
+

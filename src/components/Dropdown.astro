@@ -16,7 +16,7 @@ const { title, items = [], links = [] } = Astro.props;
         {title || 'Select an Option'}
     </button>
     <div class="dropdown-menu hidden">
-        {items.map((item, index) => (
+        {items.map((item:string, index:number) => (
             <div class="dropdown-item text-white"  data-value={item}>
                 {links[index] ? (
                     <a href={links[index]} class="block">{item}</a>
@@ -56,6 +56,9 @@ const { title, items = [], links = [] } = Astro.props;
                         isOpen = false; 
                         button.textContent = selectedValue || 'Select an Option';
                         dropdownMenu.classList.add('hidden');
+
+                        const selectEvent = new CustomEvent('regionSelected', { detail: selectedValue });
+                        dropdown.dispatchEvent(selectEvent);
                     }
                 });
 

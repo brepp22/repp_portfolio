@@ -5,8 +5,8 @@ interface City {
 }
 
 interface Props {
-    areaName: string | null;
-    cities: City[];
+    areaName: string | string[];
+    cities: City[] ;
 }
 
 const { areaName, cities } = Astro.props; 
