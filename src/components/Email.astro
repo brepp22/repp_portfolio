@@ -1,5 +1,6 @@
 ---
 const email = "brepp@hotmail.com"; 
+import Toast from '../components/Toast.astro';
 ---
 
 <form class="email-form" id="email-form">
@@ -19,22 +20,35 @@ const email = "brepp@hotmail.com";
     <label for="html">Message:</label>
     <textarea id="html" name="html" required></textarea>
 
-    <button type="submit" class="email-button">Send Email</button>
+    <button type="button" id="send-email-button" class="email-button">Send Email</button>
 </form>
+ <div class="toast-style" id="toast-container" style="display: none; cursor: pointer;">
+        <Toast content="" toast="Email Sending"/>
+    </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-       
-        const form = document.getElementById('email-form') as HTMLFormElement;
 
-        if (form) {
-            form.addEventListener('submit', async (event) => {
-                event.preventDefault();
-
-              
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('email-form') as HTMLFormElement; 
+            const toastContainer = document.getElementById('toast-container') as HTMLElement; 
+            const sendEmailButton = document.getElementById('send-email-button'); 
+    
+            console.log('Script loaded, waiting for form submission...');
+    
+            sendEmailButton?.addEventListener('click', async () => { 
+                console.log('Send email button clicked.');
+    
+                if (!form.checkValidity()) {
+                    showToast("Please fill out all required fields.");
+                    console.log('Fields not filled out');
+                    return;
+                }
+    
                 const formData = new FormData(form); 
                 const data = Object.fromEntries(formData.entries());
-
+    
+                console.log('Form data:', data); 
+    
                 try {
                     const response = await fetch('/api/sendEmail.json', {
                         method: 'POST',
@@ -43,25 +57,48 @@ const email = "brepp@hotmail.com";
                         },
                         body: JSON.stringify(data),
                     });
-
+    
+                    console.log('Response received:', response); 
+    
                     const result = await response.json();
+                    console.log('Result from server:', result); 
+    
                     if (response.ok) {
-                        alert(result.message); 
+                        showToast("Email sent successfully!");
+                        console.log('Email sent');
                     } else {
-                        alert(`Error: ${result.message}`); 
+                        showToast(`Error: ${result.message}`);
+                        console.log('Email not sent');
                     }
+    
                 } catch (error) {
                     console.error('Error:', error);
-                    alert('Error sending email.');
+                    showToast('Error sending email.');
                 }
             });
-        } else {
-            console.error('Form not found');
-        }
-    });
-</script>
+            function showToast(message: string) {
+            const toast = document.querySelector('.toast') as HTMLElement; 
+            if (toast) {
+                toast.innerText = message; 
+                toastContainer.style.display = 'flex'; 
+                
+                toast.classList.remove('hidden', 'animate-shake');
+        
+     
+    
+        toast.classList.add('animate-shake');
 
+        console.log('Toast message shown:', message);
 
+        setTimeout(() => {
+            toastContainer.style.display = 'none'; 
+            console.log('Toast hidden');
+        }, 2500);
+    }
+}
+        });
+    </script>
+    
 
 <style>
     body {
@@ -95,7 +132,7 @@ const email = "brepp@hotmail.com";
     }
 
     .email-form button {
-        background-color: #42678e; 
+        background-color: #454978 ;
         color: #fff;
         padding: 10px 15px; 
         border: none; 
@@ -105,13 +142,33 @@ const email = "brepp@hotmail.com";
     }
 
     .email-form button:hover {
-        background-color: #0056b3;
+        background-color: rgb(115, 126, 174);
     }
 
     .email-form textarea {
         resize: vertical; 
         height: 100px; 
     }
+    .toast-style{
+        background-color: rgb(115, 126, 174);
+        color:white;
+        font-family: monospace;
+        padding: 1rem;
+        width: 250px;
+        text-align: center;
+        border-radius: 0.375rem;
+        margin: 0 auto;
+        font-size: 18px;
+    }
+    #toast-container {
+        position: fixed; 
+        top: 20px; 
+        left: 50%; 
+        transform: translateX(-50%); 
+        display: none; 
+        z-index: 50; 
+    }
+
 </style>
 
   
