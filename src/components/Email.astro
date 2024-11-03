@@ -3,17 +3,21 @@ const email = "brepp@hotmail.com";
 ---
 
 <form class="email-form" id="email-form">
-    <label for="from">Your Email:</label>
-    <input type="email" id="from" name="from" required />
+    
+    <label for="to">To:</label>
+    <input id="to" name="to" value={email} readonly/>
 
-  
-    <input type="hidden" id="to" name="to" value={email} />
+    <label for="useremail">Your Email:</label>
+    <input type="email" id="useremail" name="useremail" required />
+
+    <label for="name">Your Name:</label>
+    <input id="name" required />
 
     <label for="subject">Subject:</label>
     <input type="text" id="subject" name="subject" required />
 
-    <label for="text">Plain Text Content:</label>
-    <textarea id="text" name="text" required></textarea>
+    <label for="html">Message:</label>
+    <textarea id="html" name="html" required></textarea>
 
     <button type="submit" class="email-button">Send Email</button>
 </form>
