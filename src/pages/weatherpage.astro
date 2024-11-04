@@ -60,29 +60,32 @@ const regions: Record<Region, { name: string; code: string; }[]> = {
 
 let selectedRegion: Region = 'Pacific Northwest';
 
+let citiesArray: { name: string; code: string; }[] = [];
+
+
 
     function onRegionSelect(region: string) {
         const typedRegion = region as Region;
-        selectedRegion = typedRegion
+        selectedRegion = typedRegion;
         const cities = regions[typedRegion];
 
         console.log(cities)
+        citiesArray = [...cities];
+        console.log(citiesArray)
 
         const weatherContainer = document.getElementById('weather-container');
         if (weatherContainer) {
             weatherContainer.innerHTML = '';
-            const weatherComponent = document.createElement('div');
-            const citiesArray = regions[typedRegion]; 
-            console.log(citiesArray) 
-             weatherComponent.setAttribute('data-area-name', region);
-            weatherComponent.setAttribute('data-cities', JSON.stringify(citiesArray));
-          
-         weatherContainer.appendChild(weatherComponent);
-         console.log(weatherContainer)
-        } else {
-            console.error("Weather container not found!");
-        }
+            const weatherComponent = document.createElement('weather-component'); 
+            weatherComponent.setAttribute('area-name', region);
+            weatherComponent.setAttribute('cities', citiesArray)
+            
+        weatherContainer.appendChild(weatherComponent);
+        console.log(weatherContainer);
+    } else {
+        console.error("Weather container not found!");
     }
+}
 
     
 
@@ -104,3 +107,14 @@ let selectedRegion: Region = 'Pacific Northwest';
 
 
 
+<style>
+    #weather-container {
+    margin-top: 20px; /* Space above the weather component */
+    padding: 20px; /* Inner spacing */
+    border: 1px solid #ccc; /* Light border around the container */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #6c6262; /* Light background color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    height: 300px;
+}
+</style>

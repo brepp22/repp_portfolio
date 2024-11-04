@@ -6,7 +6,7 @@ interface City {
 
 interface Props {
     areaName: string | string[];
-    cities: City[] ;
+    cities: City[];
 }
 
 const { areaName, cities } = Astro.props; 
@@ -151,5 +151,9 @@ const handleCityChange = async (city: string) => {
             });
         });
     });
+
+    
 </script>
+
+
 
