@@ -78,7 +78,7 @@ let citiesArray: { name: string; code: string; }[] = [];
             weatherContainer.innerHTML = '';
             const weatherComponent = document.createElement('weather-component'); 
             weatherComponent.setAttribute('area-name', region);
-            weatherComponent.setAttribute('cities', citiesArray)
+            weatherComponent.setAttribute('cities', JSON.stringify(citiesArray))
             
         weatherContainer.appendChild(weatherComponent);
         console.log(weatherContainer);

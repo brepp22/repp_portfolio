@@ -57,8 +57,11 @@ const { title, items = [], links = [] } = Astro.props;
                         button.textContent = selectedValue || 'Select an Option';
                         dropdownMenu.classList.add('hidden');
 
-                        const selectEvent = new CustomEvent('regionSelected', { detail: selectedValue });
-                        dropdown.dispatchEvent(selectEvent);
+                        const regionSelectedEvent = new CustomEvent('regionSelected', {
+                            detail: selectedValue 
+                        });
+                        dropdown.dispatchEvent(regionSelectedEvent);
+                    
                     }
                 });
 
