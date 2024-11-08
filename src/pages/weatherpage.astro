@@ -1,120 +1,134 @@
 ---
-import Layout from "../layouts/Layout.astro"
-import Main from "../components/Main.astro"
-import Weather from "../components/Weather.astro"
-import Dropdown from "../components/Dropdown.astro"
-import { WeatherComponent } from "../components/WeatherComponent"
+import Layout from "../layouts/Layout.astro";
+import Main from "../components/Main.astro";
+import Dropdown from "../components/Dropdown.astro";
 
-type Region = 'Pacific Northwest' | 'West Mountain' | 'West North Central' | 'West South Central' | 'East South Central' | 'East North Central' | 'Middle Atlantic'
-| 'South Atlantic' | 'North East' ;
+interface Props {
+    cities: string[]; // Array of city names as strings
+}
 
-let areaItems : Region[] = [
-  'Pacific Northwest', 'West Mountain', 'West North Central', 'West South Central',
-  'East South Central', 'East North Central', 'Middle Atlantic', 'South Atlantic', 'North East'
-];
+const { cities } = Astro.props;
 
-const regions: Record<Region, { name: string; code: string; }[]> = {
-  'Pacific Northwest': [{ name: 'Seattle', code: 'Seattle' }, { name: 'Portland', code: 'Portland' }],
-  'West Mountain': [{ name: 'Denver', code: 'Denver' }, { name: 'Salt Lake City', code: 'SaltLakeCity' }],
-  'West North Central': [{ name: 'Minneapolis', code: 'Minneapolis' }, { name: 'Kansas City', code: 'KansasCity' }],
-  'West South Central': [],
-  'East South Central': [], 
-  'East North Central': [], 
-  'Middle Atlantic': [], 
-  'South Atlantic': [], 
-  'North East': [] 
-};
-
-let selectedRegion: Region = 'Pacific Northwest';
-let cities = regions[selectedRegion];
-
+let citySelect = [
+  'Austin', 'Boston', 'Chicago', 'Columbus', 'Dallas',
+  'Denver', 'Detroit', 'El Paso', 'Fort Worth', 'Houston',
+  'Indianapolis', 'Jacksonville', 'Las Vegas', 'Los Angeles', 'Memphis',
+  'Miami', 'Nashville', 'New Orleans', 'New York', 'Oklahoma City',
+  'Philadelphia', 'Phoenix', 'Portland', 'San Antonio', 'San Diego', 'San Francisco',
+  'Seattle', 'Tucson', 'Virginia Beach', 'Washington'
+]
 ---
 
-<Layout title = "Weather Page">
+<Layout title="Weather Page">
     <Main>
-     
-        <Dropdown items={areaItems} />
-            <div id="weather-container">
-                <Weather areaName={selectedRegion} cities={cities}/>
-            </div>
+        <Dropdown items={citySelect} />
+
+
+
+<div id="weather-info" class="mt-4 text-center text-white font-mono">
+    <p>Choose a city to see the weather...</p>
+    <h2 class="weather-title"></h2>
+</div>
     </Main>
-
-
 </Layout>
-
-<script>
-
-type Region = 'Pacific Northwest' | 'West Mountain' | 'West North Central' | 'West South Central' | 'East South Central' | 'East North Central' | 'Middle Atlantic'
-| 'South Atlantic' | 'North East' ;
-
-const regions: Record<Region, { name: string; code: string; }[]> = {
-  'Pacific Northwest': [{ name: 'Seattle', code: 'Seattle' }, { name: 'Portland', code: 'Portland' }],
-  'West Mountain': [{ name: 'Denver', code: 'Denver' }, { name: 'Salt Lake City', code: 'SaltLakeCity' }],
-  'West North Central': [{ name: 'Minneapolis', code: 'Minneapolis' }, { name: 'Kansas City', code: 'KansasCity' }],
-  'West South Central': [],
-  'East South Central': [], 
-  'East North Central': [], 
-  'Middle Atlantic': [], 
-  'South Atlantic': [], 
-  'North East': [] 
-};
-
-let selectedRegion: Region = 'Pacific Northwest';
-
-let citiesArray: { name: string; code: string; }[] = [];
-
-
-
-    function onRegionSelect(region: string) {
-        const typedRegion = region as Region;
-        selectedRegion = typedRegion;
-        const cities = regions[typedRegion];
-
-        console.log(cities)
-        citiesArray = [...cities];
-        console.log(citiesArray)
-
-        const weatherContainer = document.getElementById('weather-container');
-        if (weatherContainer) {
-            weatherContainer.innerHTML = '';
-            const weatherComponent = document.createElement('weather-component'); 
-            weatherComponent.setAttribute('area-name', region);
-            weatherComponent.setAttribute('cities', JSON.stringify(citiesArray));
+<script type="module">
+    
+    const fetchWeatherData = async (cityName) => {
+        const weatherInfo = document.getElementById('weather-info');
+        
+     
+        const cityCode = encodeURIComponent(cityName);
+        
+        try {
+            const response = await fetch(`https://wttr.in/${cityCode}?format=j1`);
             
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             
-        weatherContainer.appendChild(weatherComponent);
-        console.log(weatherContainer);
-    } else {
-        console.error("Weather container not found!");
-    }
-}
+            const data = await response.json();
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const dropdown = document.querySelector('.dropdown') as HTMLElement | null;
+          
+            console.log('Weather Data:', data);
+        
+            const weatherDescription = data.current_condition[0].weatherDesc[0].value;
+            const weatherEmoji = getWeatherEmoji(weatherDescription);
 
-        if (dropdown) {
-            dropdown.addEventListener('regionSelected', (event) => {
-                const selectedRegion = (event as CustomEvent).detail;
-                onRegionSelect(selectedRegion);
-                console.log(selectedRegion)
-            });
-        } else {
-            console.error("Dropdown not found!");
+            weatherInfo.innerHTML = `
+                <h2 class='weather-title'> ${cityName} </h2> <br></br>
+                <p class='text-white font-mono text-center'>Current Temperature: ${data.current_condition[0].temp_F} °F</p>
+                <p class='text-white font-mono text-center'>Feels Like: ${data.current_condition[0].FeelsLikeF} °F</p>
+                <p class='text-white font-mono text-center'>
+                    Weather Description: ${weatherEmoji} ${weatherDescription.trim()}
+                </p>
+                <p class='text-white font-mono text-center'>Humidity: ${data.current_condition[0].humidity}%</p>
+                <p class='text-white font-mono text-center'>Wind Speed: ${data.current_condition[0].windspeedMiles} mph</p>
+            `;
+        } catch (err) {
+            console.error('Fetch error:', err);
+            weatherInfo.innerHTML = `<p class="text-white">Error fetching data: ${err.message}</p>`;
         }
-    });
-</script>
+    };
+
+   
+    const handleSelection = (event) => {
+        const selectedValue = event.target.getAttribute('data-value'); 
+        if (selectedValue) {
+            fetchWeatherData(selectedValue); 
+        }
+    };
+
   
+    document.addEventListener("DOMContentLoaded", () => {
+        const dropdownItems = document.querySelectorAll(".dropdown-item"); 
+        dropdownItems.forEach(item => {
+            item.addEventListener("click", handleSelection); 
+        });
+    });
 
-
+ 
+    const getWeatherEmoji = (description) => {
+        switch (description.trim().toLowerCase()) {
+            case 'clear': return '☀️';
+            case 'sunny': return '🌞';
+            case 'rainy': return '🌧️';
+            case 'cloudy': return '☁️';
+            case 'overcast': return '☁️';
+            case 'mist': return '⛅';
+            case 'partly cloudy': return '⛅';
+            case 'thunderstorm': return '⛈️';
+            case 'snow': return '❄️';
+            case 'fog': return '🌫️';
+            case 'windy': return '💨';
+            default: return '🌈';
+        }
+    };
+</script>
 
 <style>
-    #weather-container {
-    margin-top: 20px; /* Space above the weather component */
-    padding: 20px; /* Inner spacing */
-    border: 1px solid #ccc; /* Light border around the container */
-    border-radius: 8px; /* Rounded corners */
-    background-color: #6c6262; /* Light background color */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    height: 300px;
-}
+     #weather-info {
+        height: 400px;
+        width: 600px;
+        background-color: #454978;
+        color: white; 
+        margin: 50px auto; 
+        padding: 20px; 
+        border-radius: 10px; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        flex-direction: column; 
+        overflow-y: auto;
+        font-size: 1.5rem;
+    }
+
+  
+    #weather-info p {
+        margin: 10px 0; 
+        font-size: 25px;
+    }
+   
+
+   
 </style>
+
