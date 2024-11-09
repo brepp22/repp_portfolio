@@ -1,16 +1,19 @@
 {
     "redirects": [
       {
-        "source": "/contact",
+        "source": "/home",
+        "destination": "/",
+        "permanent": true
+      },
+      {
+        "source": "/contact-me",
         "destination": "/contact",
         "permanent": true
       },
       {
-        "source": "/weatherpage",
+        "source": "/weather-page",
         "destination": "/weatherpage",
         "permanent": true
       }
     ]
   }
-  
-  

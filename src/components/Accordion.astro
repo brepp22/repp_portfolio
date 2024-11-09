@@ -2,15 +2,15 @@
 
 interface Props {
     title?: string;
-    details?: string;
-    link?: string;
+    details?: string[];
+    link?: string[];
     
 }
 
-const { title, details, link } = Astro.props;
+const { title, details =[], link=[] } = Astro.props;
 
-const detailsArray = details?.split('\n');
-const linksArray = link ? link.split('\n') : [];
+const detailsArray = details? details: [];
+const linksArray = link ? link : [];
 
 console.log('Accordion Props:', { title, details, link });
 
