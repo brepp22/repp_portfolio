@@ -1,5 +1,16 @@
 {
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/" }
+    "redirects": [
+      {
+        "source": "/contact",
+        "destination": "/contact",
+        "permanent": true
+      },
+      {
+        "source": "/weatherpage",
+        "destination": "/weatherpage",
+        "permanent": true
+      }
     ]
   }
+  
+  
