@@ -3,11 +3,8 @@ import Layout from "../layouts/Layout.astro";
 import Main from "../components/Main.astro";
 import Dropdown from "../components/Dropdown.astro";
 
-interface Props {
-    cities: string[]; 
-}
 
-const { cities } = Astro.props;
+
 
 let citySelect = [
   'Austin', 'Boston', 'Chicago', 'Columbus', 'Dallas',
