@@ -75,7 +75,7 @@ const { title, items = [], links = []  } = Astro.props;
 <style>
     .dropdown-menu {
         position: absolute; 
-        width: 320px;
+        width: 100%;
         background: #454978; 
         border: 1px solid gray; 
         z-index: 1000; 
@@ -85,7 +85,7 @@ const { title, items = [], links = []  } = Astro.props;
         max-height: 400px;
         max-width: 320px;
         overflow-y: auto;
-        overflow: auto;
+      
     }
 
     .dropdown-menu::-webkit-scrollbar {
@@ -120,7 +120,7 @@ const { title, items = [], links = []  } = Astro.props;
         display: none; 
     }
 
-    @media{
+    @media (max-width: 650px){
         .dropdown-menu{
             width:95%;
             max-width: 95%;
