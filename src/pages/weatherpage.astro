@@ -1,132 +1,20 @@
 ---
+
 import Layout from "../layouts/Layout.astro";
 import Main from "../components/Main.astro";
-import Dropdown from "../components/Dropdown.astro";
+import Weatherpage from "../components/Weatherpage.astro";
 
-interface Props {
-    cities: string[]; 
-}
-
-const { cities } = Astro.props;
-
-let citySelect = [
-  'Austin', 'Boston', 'Chicago', 'Columbus', 'Dallas',
-  'Denver', 'Detroit', 'El Paso', 'Fort Worth', 'Houston',
-  'Indianapolis', 'Jacksonville', 'Las Vegas', 'Los Angeles', 'Memphis',
-  'Miami', 'Nashville', 'New Orleans', 'New York', 'Oklahoma City',
-  'Philadelphia', 'Phoenix', 'Portland', 'San Antonio', 'San Diego', 'San Francisco',
-  'Seattle', 'Tucson', 'Virginia Beach', 'Washington'
-]
 ---
 
-<Layout title="Weather Page">
+
+
+<Layout title = "Weather Page">
     <Main>
-        <Dropdown items={citySelect} />
-
-
-
-<div id="weather-info" class="mt-4 text-center text-white font-mono bg-slate-800">
-    <p>Choose a city to see the weather...</p>
-</div>
-    </Main>
-</Layout>
-<script type="module">
-    
-    const fetchWeatherData = async (cityName) => {
-        const weatherInfo = document.getElementById('weather-info');
-        
      
-        const cityCode = encodeURIComponent(cityName);
-        
-        try {
-            const response = await fetch(`https://wttr.in/${cityCode}?format=j1`);
-            
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
-            const data = await response.json();
-
-          
-            console.log('Weather Data:', data);
-        
-            const weatherDescription = data.current_condition[0].weatherDesc[0].value;
-            const weatherEmoji = getWeatherEmoji(weatherDescription);
-
-            weatherInfo.innerHTML = `
-                <h2 class='weather-title'> ${cityName} </h2> <br></br>
-                <p class='text-white font-mono text-center'>Current Temperature: ${data.current_condition[0].temp_F} °F</p>
-                <p class='text-white font-mono text-center'>Feels Like: ${data.current_condition[0].FeelsLikeF} °F</p>
-                <p class='text-white font-mono text-center'>
-                    Weather Description: ${weatherEmoji} ${weatherDescription.trim()}
-                </p>
-                <p class='text-white font-mono text-center'>Humidity: ${data.current_condition[0].humidity}%</p>
-                <p class='text-white font-mono text-center'>Wind Speed: ${data.current_condition[0].windspeedMiles} mph</p>
-            `;
-        } catch (err) {
-            console.error('Fetch error:', err);
-            weatherInfo.innerHTML = `<p class="text-white">Error fetching data: ${err.message}</p>`;
-        }
-    };
-
-   
-    const handleSelection = (event) => {
-        const selectedValue = event.target.getAttribute('data-value'); 
-        if (selectedValue) {
-            fetchWeatherData(selectedValue); 
-        }
-    };
-
+      
+       <Weatherpage />
   
-    document.addEventListener("DOMContentLoaded", () => {
-        const dropdownItems = document.querySelectorAll(".dropdown-item"); 
-        dropdownItems.forEach(item => {
-            item.addEventListener("click", handleSelection); 
-        });
-    });
-
- 
-    const getWeatherEmoji = (description) => {
-        switch (description.trim().toLowerCase()) {
-            case 'clear': return '☀️';
-            case 'sunny': return '🌞';
-            case 'rainy': return '🌧️';
-            case 'cloudy': return '☁️';
-            case 'overcast': return '☁️';
-            case 'mist': return '⛅';
-            case 'partly cloudy': return '⛅';
-            case 'thunderstorm': return '⛈️';
-            case 'snow': return '❄️';
-            case 'fog': return '🌫️';
-            case 'windy': return '💨';
-            default: return '🌈';
-        }
-    };
-</script>
-
-<style>
-     #weather-info {
-        height: 400px;
-        width: 600px;
-        color: white; 
-        margin: 50px auto; 
-        padding: 20px; 
-        border-radius: 10px; 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        flex-direction: column; 
-        overflow-y: auto;
-        font-size: 1.5rem;
-    }
-
+    </Main>
   
-    #weather-info p {
-        margin: 10px 0; 
-        font-size: 25px;
-    }
-   
-
-   
-</style>
-
+  
+  </Layout>
