@@ -10,7 +10,7 @@ import netlify from '@astrojs/netlify';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind()],
+  integrations: [tailwind(), vercelServerless()],
   output: 'server',
   base: '/',
   adapter: vercelServerless()
