@@ -37,6 +37,8 @@ export const POST: APIRoute = async ({ request }) => {
                     statusText: "OK",
                     headers: {
                         "Content-Type": "application/json",
+                        "Access-Control-Allow-Orgin": '*',
+                        "Access-Control-Allow-Methods": "POST",
                     },
                 }
             );
