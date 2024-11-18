@@ -50,7 +50,7 @@ import Toast from '../components/Toast.astro';
                 console.log('Form data:', data); 
     
                 try {
-                    const response = await fetch('/api/sendEmail.json', {
+                    const response = await fetch('/api/sendEmail', {
                         method: 'POST',
                         headers: {
                             "Content-Type": "application/json",
