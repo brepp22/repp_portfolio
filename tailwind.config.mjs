@@ -3,9 +3,12 @@ export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'], 
 	theme: {
 		extend: { 
+			colors: {
+				customButton: 'rgb(115, 126, 174)', 
+			},
 			spacing : {
 				"5px" : "5px"
-		},
+			},
 			animation: {
 				shake: 'shake 2s ease',
 			},
