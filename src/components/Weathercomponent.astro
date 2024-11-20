@@ -39,7 +39,7 @@ let citySelect = [
             // Daily Forecast (next 3 days)
             const dailyForecast = data.weather.slice(0, 3).map(day => `
                 <div class="daily-forecast bg-slate-700 rounded-lg p-4 mb-2 text-lg">
-                    <h3 class="text-lg font-bold">${day.date}</h3>
+                    <h3 class="text-lg font-bold">${formatDate(day.date)}</h3>
                     <p>Average Temp: ${day.avgtempF} °F </p>
                     <p>Weather: ${getWeatherEmoji(day.hourly[0].weatherDesc[0].value)} ${day.hourly[0].weatherDesc[0].value}</p>
                     <p>Sunrise: ${day.astronomy[0].sunrise} | Sunset: ${day.astronomy[0].sunset}</p>
@@ -96,6 +96,11 @@ let citySelect = [
             default: return '☀️';
         }
     };
+
+    const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split('-'); 
+    return `${month}-${day}-${year}`; 
+};
 </script>
 
 
