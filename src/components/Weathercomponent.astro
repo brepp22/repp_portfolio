@@ -1,10 +1,5 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Main from "../components/Main.astro";
 import Dropdown from "../components/Dropdown.astro";
-
-
-
 
 let citySelect = [
   'Austin', 'Boston', 'Chicago', 'Columbus', 'Dallas',
@@ -13,49 +8,57 @@ let citySelect = [
   'Miami', 'Nashville', 'New Orleans', 'New York', 'Oklahoma City',
   'Philadelphia', 'Phoenix', 'Portland', 'San Antonio', 'San Diego', 'San Francisco',
   'Seattle', 'Tucson', 'Virginia Beach', 'Washington'
-]
+];
 ---
 
-        <Dropdown items={citySelect} />
-
-
+<Dropdown items={citySelect} />
 
 <div id="weather-info" class="mt-4 text-center text-white font-mono bg-slate-800">
     <p>Choose a city to see the weather...</p>
 </div>
-  
+
 <script type="module">
-    
     const fetchWeatherData = async (cityName) => {
         const weatherInfo = document.getElementById('weather-info');
-        
-     
         const cityCode = encodeURIComponent(cityName);
         
         try {
             const response = await fetch(`https://wttr.in/${cityCode}?format=j1`);
-            
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            
             const data = await response.json();
 
-          
             console.log('Weather Data:', data);
-        
-            const weatherDescription = data.current_condition[0].weatherDesc[0].value;
+            
+            // Current Weather
+            const current = data.current_condition[0];
+            const weatherDescription = current.weatherDesc[0].value;
             const weatherEmoji = getWeatherEmoji(weatherDescription);
 
+            // Daily Forecast (next 3 days)
+            const dailyForecast = data.weather.slice(0, 3).map(day => `
+                <div class="daily-forecast bg-slate-700 rounded-lg p-4 mb-2">
+                    <h3 class="text-lg font-bold">${day.date}</h3>
+                    <p>Average Temp: ${day.avgtempF} °F </p>
+                    <p>Weather: ${getWeatherEmoji(day.hourly[0].weatherDesc[0].value)} ${day.hourly[0].weatherDesc[0].value}</p>
+                    <p>Sunrise: ${day.astronomy[0].sunrise} | Sunset: ${day.astronomy[0].sunset}</p>
+                </div>
+            `).join('');
+
             weatherInfo.innerHTML = `
-                <h2 class='weather-title'> ${cityName} </h2> <br></br>
-                <p class='text-white font-mono text-center'>Current Temperature: ${data.current_condition[0].temp_F} °F</p>
-                <p class='text-white font-mono text-center'>Feels Like: ${data.current_condition[0].FeelsLikeF} °F</p>
-                <p class='text-white font-mono text-center'>
+                <h2 class="weather-title text-2xl font-mono px-4">${cityName}</h2>
+                <p class="text-white font-mono">Current Temperature: ${current.temp_F} °F</p>
+                <p class="text-white font-mono">Feels Like: ${current.FeelsLikeF} °F</p>
+                <p class="text-white font-mono">
                     Weather Description: ${weatherEmoji} ${weatherDescription.trim()}
                 </p>
-                <p class='text-white font-mono text-center'>Humidity: ${data.current_condition[0].humidity}%</p>
-                <p class='text-white font-mono text-center'>Wind Speed: ${data.current_condition[0].windspeedMiles} mph</p>
+                <p class="text-white font-mono">Humidity: ${current.humidity}%</p>
+                <p class="text-white font-mono">Wind Speed: ${current.windspeedMiles} mph</p>
+                <div class="daily-forecasts mt-6">
+                    <h3 class="text-lg font-bold text-white">3-Day Forecast</h3>
+                    ${dailyForecast}
+                </div>
             `;
         } catch (err) {
             console.error('Fetch error:', err);
@@ -63,7 +66,6 @@ let citySelect = [
         }
     };
 
-   
     const handleSelection = (event) => {
         const selectedValue = event.target.getAttribute('data-value'); 
         if (selectedValue) {
@@ -71,7 +73,6 @@ let citySelect = [
         }
     };
 
-  
     document.addEventListener("DOMContentLoaded", () => {
         const dropdownItems = document.querySelectorAll(".dropdown-item"); 
         dropdownItems.forEach(item => {
@@ -79,7 +80,6 @@ let citySelect = [
         });
     });
 
- 
     const getWeatherEmoji = (description) => {
         switch (description.trim().toLowerCase()) {
             case 'clear': return '☀️';
@@ -87,7 +87,7 @@ let citySelect = [
             case 'rainy': return '🌧️';
             case 'cloudy': return '☁️';
             case 'overcast': return '☁️';
-            case 'mist': return '⛅';
+            case 'mist': return '🌫️';
             case 'partly cloudy': return '⛅';
             case 'thunderstorm': return '⛈️';
             case 'snow': return '❄️';
@@ -98,10 +98,11 @@ let citySelect = [
     };
 </script>
 
+
 <style>
      #weather-info {
-        height: 400px;
-        width: 600px;
+        height: 800px;
+        width: 700px;
         color: white; 
         margin: 50px auto; 
         padding: 20px; 
