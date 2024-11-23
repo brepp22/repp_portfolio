@@ -18,7 +18,7 @@ console.log('Accordion Props:', { title, details, link });
 <div class = "accordion-container">
 <div class="accordion group relative border-box">
     <button
-      class="accordion_button flex w-full flex-1 items-center justify-between gap-2 p-3 text-left font-medium transition text-white hover:text-blue-400 sm:px-4"
+      class="accordion_button flex w-full flex-1 items-center justify-between gap-2 p-3 text-left font-medium transition text-white dark:text-black dark:hover:text-blue-900 hover:text-blue-400 sm:px-4"
       type="button"
       id={`${title}-accordion-button`} 
       aria-expanded="false"
@@ -38,7 +38,7 @@ console.log('Accordion Props:', { title, details, link });
         {linksArray[index] ? (
           <a href={linksArray[index]} class="font-mono hover:text-blue-400 block">{detail}</a>
         ) : (
-          <span class="text-white font-mono block">{detail}</span>
+          <span class="text-white dark:text-black font-mono block">{detail}</span>
         )}
       </p>
   ))}

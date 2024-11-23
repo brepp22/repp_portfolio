@@ -12,39 +12,39 @@ import Contact from '../components/Contact.astro'
 <Layout title="Beighley Repp">
 	<Main>
 		<div class="skew-x-7 ml-8">
-		<h3> Hi, my name is </h3> 
+		<h3 class="dark:text-black"> Hi, my name is </h3> 
 	</div>
 		<H1 text = "Beighley Repp" />
 		<H1 text = "I enjoy building things for the web. " />
 		<div class="flex flex-wrap skew-x-7 ml-7 max-w-6xl">
-		<h3> I'm a frontend developer based in beautiful California, 
+		<h3 class="dark:text-black"> I'm a frontend developer based in beautiful California, 
 			dedicated to crafting websites that deliver a smooth user experience. 
 			I thrive on exploring new technologies and stacks, 
 			and I'm committed to learning every day.
 		</h3>
 		</div>
 		<div class="flex flex-wrap items-center justify-center">
-			<h2 class="text-3xl text-slate-300 font-mono pt-20 pb-20"> I CAN BUILD PRACTICAL THINGS LIKE THIS...</h2>
+			<h2 class="text-3xl text-slate-300 font-mono pt-20 pb-20 dark:text-slate-800"> I CAN BUILD PRACTICAL THINGS LIKE THIS...</h2>
 
 	</div>
 		<div class="flex flex-wrap justify-evenly items-start px-20 pb-20"> 
-		<div class="accordion-container my-1 px-5 py-5 rounded-md border border-white w-[600px]">
-			<h2 class="font-mono text-xl text-white text-center py-5">Accordion</h2>
+		<div class="accordion-container my-1 px-5 py-5 rounded-md border border-white dark:border-black w-[600px]">
+			<h2 class="font-mono text-xl text-white dark:text-black text-center py-5">Accordion</h2>
 			<h3><Accordion title="First Item" details={["Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."]} /></h3>
 			<h3><Accordion title="Second Item" details={["Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."]} /></h3>
 			<h3><Accordion title="Third Item" details={["Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."]} /></h3>
 		  </div> 
-		  <div class="dropdown-container rounded-md border border-white w-[600px] h-[361px] my-1 px-5 py-5 ">
+		  <div class="dropdown-container rounded-md border border-white dark:border-black w-[600px] h-[361px] my-1 px-5 py-5 ">
 		  <h2 class="font-mono text-xl text-white text-center py-5">Drop Down</h2>
     			<Dropdown title="Select an Option" 
 				items={["Select an Option", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]} />
 			</div>
-			<div class="toast-container rounded-md border border-white w-[600px] h-[361px] my-1 px-5 py-5 ">
+			<div class="toast-container rounded-md border border-white dark:border-black w-[600px] h-[361px] my-1 px-5 py-5 ">
 				<h2 class="font-mono text-xl text-white text-center py-5">Toast</h2>
 			<Toast toast="Toast" content="Your Toast is Ready" />
 			</div>
 
-			<div class="weather-container rounded-md border border-white w-[600px] h-[361px] my-1 px-5 py-5">
+			<div class="weather-container rounded-md border border-white dark:border-black w-[600px] h-[361px] my-1 px-5 py-5">
                 <h2 class="font-mono text-xl text-white text-center py-5">Weather</h2>
 				<Weather
 				cities={[
@@ -58,13 +58,13 @@ import Contact from '../components/Contact.astro'
 			</div>
 
 			<div class="flex flex-wrap items-center justify-center">
-				<h2 class="text-3xl text-slate-300 font-mono "> AND AM ALWAYS LOOKING TO TRANSFORM CONCEPTS INTO CODE 
+				<h2 class="text-3xl text-slate-300  dark:text-slate-800 font-mono "> AND AM ALWAYS LOOKING TO TRANSFORM CONCEPTS INTO CODE 
 				</h2>
 			</div>
 
 
 			<div class="pt-20 flex justify-center">
-			<h4 class="text-slate-300 font-mono"> Find Me At :</h4>
+			<h4 class="text-slate-300 font-mono  dark:text-slate-800"> Find Me At :</h4>
 			</div>
 
 			<div class="social-links flex justify-center items-center pt-1 space-x-4">
@@ -76,7 +76,7 @@ import Contact from '../components/Contact.astro'
 				</a>
 			</div>
 			<div class="pt-3 flex justify-center">
-				<h4 class="text-slate-300 font-mono text-sm"> Crafted in 2024</h4>
+				<h4 class="text-slate-300 font-mono text-sm  dark:text-slate-800"> Crafted in 2024</h4>
 				</div>
 	</Main>
 </Layout>
