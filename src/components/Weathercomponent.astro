@@ -13,7 +13,7 @@ let citySelect = [
 
 <Dropdown items={citySelect} />
 
-<div id="weather-info" class="mt-4 text-center text-white font-mono bg-slate-800 dark:text-black dark:bg-slate-500">
+<div id="weather-info" class="mt-4 text-center text-white font-mono bg-slate-800 dark:text-black dark:bg-slate-400">
     <p>Choose a city to see the weather...</p>
 </div>
 
@@ -38,7 +38,7 @@ let citySelect = [
 
             // Daily Forecast (next 3 days)
             const dailyForecast = data.weather.slice(0, 3).map(day => `
-                <div class="daily-forecast bg-slate-700 rounded-lg p-4 mb-2 text-lg dark:text-black dark:bg-slate-400">
+                <div class="daily-forecast bg-slate-700 rounded-lg p-4 mb-2 text-lg dark:text-black dark:bg-slate-300">
                     <h3 class="text-lg font-bold">${formatDate(day.date)}</h3>
                     <p>Average Temp: ${day.avgtempF} °F </p>
                     <p>Weather: ${getWeatherEmoji(day.hourly[0].weatherDesc[0].value)} ${day.hourly[0].weatherDesc[0].value}</p>
