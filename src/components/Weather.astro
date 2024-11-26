@@ -35,7 +35,7 @@ const fetchWeatherData = async (city: string) => {
     <div class="flex flex-wrap justify-center gap-4 md:space-x-4">
         {cities.map(city => (
             <button 
-                class="city-button bg-slate-800" 
+                class="city-button bg-slate-800 dark:bg-slate-400 text-white dark:text-black dark:hover:text-blue-900 hover:text-blue-400 dark:active:bg-slate-900 dark:active:text-white" 
                 data-code={city.code}>
                 {city.name}
             </button>
@@ -54,24 +54,19 @@ const fetchWeatherData = async (city: string) => {
                 <p>Wind Speed: {data.current_condition[0].windspeedMiles} mph</p>
             </div>
         ) : (
-            <p class="text-center text-white font-mono">Choose a City...</p>
+            <p class="text-center text-white dark:text-black font-mono">Choose a City...</p>
         )}
     </div>
 </div>
 
 <style>
     .city-button {
-        color: white; 
         border: none; 
         border-radius: 4px; 
         padding: 10px 20px; 
         cursor: pointer; 
         transition: background-color 0.3s; 
         font-family: monospace;
-    }
-
-    .city-button:hover {
-        color:  #63b3ed; 
     }
 
     .city-button.active{
@@ -124,13 +119,13 @@ const fetchWeatherData = async (city: string) => {
 
             const weatherInfo = document.getElementById('weather-info');
             weatherInfo.innerHTML = `
-                <p class='text-white font-mono text-center'>Current Temperature: ${data.current_condition[0].temp_F} °F</p>
-                <p class='text-white font-mono text-center'>Feels Like: ${data.current_condition[0].FeelsLikeF} °F</p>
-                <p class='text-white font-mono text-center'>
+                <p class='text-white dark:text-black font-mono text-center'>Current Temperature: ${data.current_condition[0].temp_F} °F</p>
+                <p class='text-white dark:text-black font-mono text-center'>Feels Like: ${data.current_condition[0].FeelsLikeF} °F</p>
+                <p class='text-white dark:text-black font-mono text-center'>
                     Weather Description: ${weatherEmoji} ${weatherDescription.trim()}
                 </p>
-                <p class='text-white font-mono text-center'>Humidity: ${data.current_condition[0].humidity}%</p>
-                <p class='text-white font-mono text-center'>Wind Speed: ${data.current_condition[0].windspeedMiles} mph</p>
+                <p class='text-white dark:text-black font-mono text-center'>Humidity: ${data.current_condition[0].humidity}%</p>
+                <p class='text-white dark:text-black font-mono text-center'>Wind Speed: ${data.current_condition[0].windspeedMiles} mph</p>
             `;
         } catch (err) {
             console.error('Fetch error:', err);
