@@ -27,13 +27,21 @@ import Nav from '../components/Nav.astro';
 	<body class="min-h-screen">
 		<Nav />
 		<div class="flex justify-end px-4 py-2  bg-slate-900 text-white dark:bg-slate-300 dark:text-black transition-all">
-			<button
-				id="theme-toggle"
-				class="p-2 rounded bg-slate-800 text-white dark:bg-slate-400 dark:text-black transition-all font-mono"
-				aria-label="Toggle Theme"
-			>
-				Toggle Theme
-			</button>
+			<div class="flex justify-center items-center py-4 transition-colors">
+				<label
+					for="theme-toggle"
+					class="relative inline-flex items-center cursor-pointer"
+					aria-label="Toggle Theme"
+				>
+					<input type="checkbox" id="theme-toggle" class="sr-only peer" />
+					<div
+						class="w-16 h-8 bg-gray-400 peer-checked:bg-slate-800 rounded-full transition-colors dark:peer-checked:bg-slate-400"
+					></div>
+					<div
+						class="w-7 h-7 bg-white dark:bg-black rounded-full absolute left-1 top-1 peer-checked:translate-x-8 transition-transform"
+					></div>
+				</label>
+			</div>
 		</div>
 		<slot />
 	</body>
