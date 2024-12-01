@@ -32,20 +32,20 @@ const fetchApiData = async (): Promise<ApiResponse | null> => {
 
 // Fetch API data during server-side rendering
 const apiData = await fetchApiData();
-const articles = apiData?.results.slice(0, 5) || [];
+const articles = apiData?.results.slice(0, 10) || [];
 ---
 
 <html>
 <head>
-    <title>Top 5 Articles</title>
+    <title>Top 10 Articles</title>
     <style>
         .article {
             margin-bottom: 2rem;
         }
         .article img {
-            max-width: 80%;
-            height: auto;
-            display: block;
+            width: 600px;
+            height: 400px;
+       
         }
         footer {
             margin-top: 2rem;
@@ -55,18 +55,18 @@ const articles = apiData?.results.slice(0, 5) || [];
     </style>
 </head>
 <body>
-    <h1>Top 5 Latest Articles</h1>
-    <p><strong>Section:</strong> {apiData?.section || 'Unknown'}</p>
+    <h1 class="font-mono text-3xl">Top 10 Latest Articles</h1>
+    <p class="text-2xl font-mono pb-10"><strong>Section:</strong> {apiData?.section || 'Unknown'}</p>
     {articles.length > 0 ? (
         <section>
             {articles.map((article) => (
-                <div class="article">
-                    <h2>{article.title}</h2>
-                    <p>{article.abstract}</p>
+                <div class="article font-mono pb-8">
+                    <h2 class="text-2xl pb-4"><strong>{article.title}</strong></h2>
+                    <p class="text-xl pb-8">{article.abstract}</p>
                     {article.multimedia && article.multimedia.length > 0 ? (
                         <img src={article.multimedia[0].url} alt={article.title} />
                     ) : (
-                        <p>No image available</p>
+                        <p class="text-xl font-mono">No image available</p>
                     )}
                     <a href={article.url} target="_blank">Read more</a>
                 </div>
@@ -75,7 +75,7 @@ const articles = apiData?.results.slice(0, 5) || [];
     ) : (
         <p>No articles available at the moment.</p>
     )}
-    <footer>
+    <footer class="font-mono">
         <p>{apiData?.copyright || 'All Rights Reserved.'}</p>
     </footer>
 </body>
