@@ -4,6 +4,7 @@ interface Article {
     abstract: string;
     url: string;
     multimedia: { url: string }[];
+    byline: string;
 }
 
 interface ApiResponse {
@@ -38,45 +39,49 @@ const articles = apiData?.results.slice(0, 10) || [];
 <html>
 <head>
     <title>Top 10 Articles</title>
-    <style>
-        .article {
-            margin-bottom: 2rem;
-        }
-        .article img {
-            width: 600px;
-            height: 400px;
-       
-        }
-        footer {
-            margin-top: 2rem;
-            font-size: 0.9rem;
-            color: gray;
-        }
-    </style>
 </head>
 <body>
-    <h1 class="font-mono text-3xl">Top 10 Latest Articles</h1>
-    <p class="text-2xl font-mono pb-10"><strong>Section:</strong> {apiData?.section || 'Unknown'}</p>
+    <h1 class="font-mono text-3xl">Top 10 Latest New York Times Articles</h1>
+    <p class="text-2xl font-mono pb-10"><strong>Section:</strong> {apiData?.section || ''}</p>
     {articles.length > 0 ? (
         <section>
             {articles.map((article) => (
                 <div class="article font-mono pb-8">
-                    <h2 class="text-2xl pb-4"><strong>{article.title}</strong></h2>
+                    <h2 class="text-2xl"><strong>{article.title}</strong></h2>
+                    <p class="pb-4">{article.byline}</p>
                     <p class="text-xl pb-8">{article.abstract}</p>
                     {article.multimedia && article.multimedia.length > 0 ? (
                         <img src={article.multimedia[0].url} alt={article.title} />
                     ) : (
                         <p class="text-xl font-mono">No image available</p>
                     )}
-                    <a href={article.url} target="_blank">Read more</a>
+                    <a class="mt-8 block" href={article.url} target="_blank"><strong>Read more</strong></a>
                 </div>
             ))}
         </section>
     ) : (
-        <p>No articles available at the moment.</p>
+        <p class="font-mono text-2xl">No articles available at the moment.</p>
     )}
     <footer class="font-mono">
         <p>{apiData?.copyright || 'All Rights Reserved.'}</p>
     </footer>
 </body>
 </html>
+
+<style>
+    .article {
+        margin-bottom: 2rem;
+    }
+    .article img {
+        width: 600px;
+        height: 400px;
+        margin-left: 30px;
+   
+    }
+    footer {
+        margin-top: 2rem;
+        font-size: 0.9rem;
+        color: gray;
+    }
+   
+</style>
