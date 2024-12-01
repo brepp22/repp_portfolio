@@ -1,0 +1,68 @@
+---
+interface Article {
+    title: string;
+    abstract: string;
+    url: string;
+    multimedia: { url: string }[]; // Adjust based on API structure
+}
+
+// Fetch the articles from the API
+const fetchArticles = async (): Promise<Article[]> => {
+    try {
+        const response = await fetch(
+            `https://api.nytimes.com/svc/topstories/v2/us.json?api-key=OgPNdz8zjrViHUCTW0tyCbiVpI5UkEhA`
+        );
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.results || [];
+    } catch (error) {
+        console.error('Error fetching articles:', error);
+        return [];
+    }
+};
+
+// Fetch articles during server-side rendering
+const articles = await fetchArticles();
+
+// Select the 5 newest articles
+const newestArticles = articles.slice(0, 5);
+---
+
+<html>
+<head>
+    <title>Top 5 Articles</title>
+    <style>
+        .article {
+            margin-bottom: 2rem;
+        }
+        .article img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Top 5 Latest Articles</h1>
+    {newestArticles.length > 0 ? (
+        <section>
+            {newestArticles.map((article) => (
+                <div class="article">
+                    <h2>{article.title}</h2>
+                    <p>{article.abstract}</p>
+                    {article.multimedia && article.multimedia.length > 0 ? (
+                        <img src={article.multimedia[0].url} alt={article.title} />
+                    ) : (
+                        <p>No image available</p>
+                    )}
+                    <a href={article.url} target="_blank">Read more</a>
+                </div>
+            ))}
+        </section>
+    ) : (
+        <p>No articles available at the moment.</p>
+    )}
+</body>
+</html>
