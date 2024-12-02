@@ -37,37 +37,56 @@ const articles = apiData?.results.slice(0, 10) || [];
 ---
 
 <html>
-<head>
+  <head>
     <title>Top 10 Articles</title>
-</head>
-<body>
-    <h1 class="font-mono text-3xl">Top 10 Latest New York Times Articles</h1>
-    <p class="text-2xl font-mono pb-10"><strong>Section:</strong> {apiData?.section || ''}</p>
+  </head>
+  <body class="bg-gray-100 text-gray-800">
+    <header class="text-center mb-8">
+      <h1 class="font-mono text-3xl mt-6">Top 10 Latest New York Times Articles</h1>
+      <p class="text-2xl font-mono mt-2">
+        <strong>Section:</strong> {apiData?.section || ''}
+      </p>
+    </header>
 
     {articles.length > 0 ? (
-        <section class="pl-5 break-words p-4 divide-y divide-gray-300 dark:divide-black">
-            {articles.map((article) => (
-                <div class="article font-mono pb-8">
-                    <h2 class="text-2xl"><strong>{article.title}</strong></h2>
-                    <p class="pb-4">{article.byline}</p>
-                    <p class="text-xl pb-8">{article.abstract}</p>
-                    {article.multimedia && article.multimedia.length > 0 ? (
-                        <img src={article.multimedia[0].url} alt={article.title} />
-                    ) : (
-                        <p class="text-xl font-mono">No image available</p>
-                    )}
-                    <a class="mt-4 block" href={article.url} target="_blank"><strong>Read more</strong></a>
-                </div>
-            ))}
-        </section>
+      <section class="max-w-4xl mx-auto shadow-md p-6 divide-y divide-gray-300 dark:divide-black font-mono">
+        {articles.map((article) => (
+          <div class="py-6">
+            <h2 class="text-2xl font-bold mb-2">{article.title}</h2>
+            <p class="mb-2 text-gray-600">{article.byline}</p>
+            <p class="text-lg mb-4">{article.abstract}</p>
+            {article.multimedia && article.multimedia.length > 0 ? (
+              <img
+                src={article.multimedia[0].url}
+                alt={article.title}
+                class="w-full max-w-lg h-auto rounded-lg mb-4"
+              />
+            ) : (
+              <p class="text-lg text-gray-500 italic">No image available</p>
+            )}
+            <a
+              href={article.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block text-blue-600 hover:text-blue-800 font-mono"
+            >
+              Read more
+            </a>
+          </div>
+        ))}
+      </section>
     ) : (
-        <p class="font-mono text-2xl">No articles available at the moment.</p>
+      <p class="text-center font-mono text-2xl mt-10">
+        No articles available at the moment.
+      </p>
     )}
-    <footer class="font-mono">
-        <p>{apiData?.copyright || 'All Rights Reserved.'}</p>
+
+    <footer class="text-center mt-10 py-4 text-gray-600 border-t">
+      <p>{apiData?.copyright || 'All Rights Reserved.'}</p>
     </footer>
-</body>
+  </body>
 </html>
+
 
 <style>
     .article {
