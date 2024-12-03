@@ -1,9 +1,11 @@
 ---
+import Contact from "../components/Contact.astro"
+
 interface Article {
     title: string;
     abstract: string;
     url: string;
-    multimedia: { url: string }[];
+    multimedia: { url: string; copyright?:string }[];
     byline: string;
 }
 
@@ -41,6 +43,10 @@ const articles = apiData?.results.slice(0, 10) || [];
     <title>Top 10 Articles</title>
   </head>
   <body class="bg-gray-100 text-gray-800">
+    <div>
+        <a href="https://developer.nytimes.com" target="_blank" rel="noopener noreferrer" class="w-40 h-40">
+            <Contact imgSrc="/images/poweredby_nytimes_200c.png" alt="databynytimes" />
+        </a>
     <header class="text-center mb-8">
       <h1 class="font-mono text-3xl mt-6">Top 10 Latest New York Times Articles</h1>
       <p class="text-2xl font-mono mt-2">
@@ -49,18 +55,24 @@ const articles = apiData?.results.slice(0, 10) || [];
     </header>
 
     {articles.length > 0 ? (
-      <section class="max-w-4xl mx-auto shadow-md p-6 divide-y divide-gray-300 dark:divide-black font-mono">
+      <section class="max-w-4xl mx-auto shadow-md shadow-gray-500 dark:shadow-md p-6 divide-y divide-gray-300 dark:divide-black font-mono">
         {articles.map((article) => (
           <div class="py-6">
             <h2 class="text-2xl font-bold mb-2">{article.title}</h2>
-            <p class="mb-2 text-gray-600">{article.byline}</p>
+            <p class="mb-2 text-gray-400 dark:text-gray-600">{article.byline}</p>
             <p class="text-lg mb-4">{article.abstract}</p>
             {article.multimedia && article.multimedia.length > 0 ? (
+                <>
               <img
                 src={article.multimedia[0].url}
                 alt={article.title}
                 class="w-full max-w-lg h-auto rounded-lg mb-4"
               />
+              { article.multimedia[0].copyright && (  <p class="text-sm text-gray-400 dark:text-gray-600 italic mb-4">
+               {article.multimedia[0].copyright}
+            </p>
+          )}
+          </> 
             ) : (
               <p class="text-lg text-gray-500 italic">No image available</p>
             )}
@@ -68,7 +80,7 @@ const articles = apiData?.results.slice(0, 10) || [];
               href={article.url}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-block text-blue-600 hover:text-blue-800 font-mono"
+              class="inline-block dark:text-blue-600 text-blue-400 hover:text-blue-200 dark:hover:text-blue-800 font-mono"
             >
               Read more
             </a>
