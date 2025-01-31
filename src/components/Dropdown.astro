@@ -20,13 +20,17 @@ const { title, items = [], links = [], onSearch  } = Astro.props;
     <div class="dropdown-menu hidden">
 
         <div class="dropdown-search mb-2 hidden">
-            <input
+            { onSearch && (
+               <input
                 type="text"
                 id="search-input"
                 class="w-full p-2 rounded-lg border bg-gray-700 text-white focus:outline-none"
                 placeholder="Search"
-            />
+            /> 
+            )}
+            
         </div>
+
         
         {items.map((item:string, index:number) => (
             <div class="dropdown-item text-white"  data-value={item}>
@@ -43,7 +47,6 @@ const { title, items = [], links = [], onSearch  } = Astro.props;
 <script>
 
 
-
     document.addEventListener('DOMContentLoaded', () => {
         const dropdowns = document.querySelectorAll('.dropdown');
 
@@ -53,6 +56,9 @@ const { title, items = [], links = [], onSearch  } = Astro.props;
 
             const button = dropdown.querySelector('.dropdown-button') as HTMLButtonElement | null;
             const dropdownMenu = dropdown.querySelector('.dropdown-menu') as HTMLElement | null;
+            const searchInput = dropdown.querySelector('#search-input') as HTMLInputElement | null;
+
+            const onSearch = dropdown.getAttribute('data-onSearch') as ((query:string) => void) | null;
 
             if (button && dropdownMenu) {
                 button.addEventListener('click', (event) => {
@@ -73,6 +79,15 @@ const { title, items = [], links = [], onSearch  } = Astro.props;
                         dropdownMenu.classList.add('hidden');
                     }
                 });
+
+                     if (searchInput && onSearch) {
+                        searchInput.addEventListener('input', (e) => {
+                        const query = (e.target as HTMLInputElement).value;
+                        if (typeof onSearch === 'function') {
+                        onSearch(query); 
+                     }
+                 });
+            }
 
                 document.addEventListener('click', (event) => {
                     if (isOpen && dropdownMenu && !dropdownMenu.contains(event.target as Node) && button && !button.contains(event.target as Node)) {
