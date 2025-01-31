@@ -16,15 +16,15 @@ const { title, items = [], links = [], onSearch  } = Astro.props;
     >
         {title || 'Select an Option'}
     </button>
+
     <div class="dropdown-menu hidden">
 
-        <div class="dropdown-search mb-2">
+        <div class="dropdown-search mb-2 hidden">
             <input
                 type="text"
                 id="search-input"
                 class="w-full p-2 rounded-lg border bg-gray-700 text-white focus:outline-none"
                 placeholder="Search"
-                oninput="handleSearch(event)"
             />
         </div>
         
@@ -42,12 +42,7 @@ const { title, items = [], links = [], onSearch  } = Astro.props;
 
 <script>
 
-function handleSearch(e: Event) {
-    const input = e.target as HTMLInputElement;
-    if (input && typeof Astro.props.onSearch === 'function') {
-      Astro.props.onSearch(input.value);  // Call the onSearch function passed from the parent component
-    }
-  }
+
 
     document.addEventListener('DOMContentLoaded', () => {
         const dropdowns = document.querySelectorAll('.dropdown');
