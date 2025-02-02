@@ -6,7 +6,10 @@ interface Props {
     onSearch? : (query: string) => void;
 }
 
+
 const { title, items = [], links = [], onSearch  } = Astro.props;
+
+let searchQuery ='';
 ---
 
 <div class="dropdown relative flex justify-center">
@@ -19,17 +22,19 @@ const { title, items = [], links = [], onSearch  } = Astro.props;
 
     <div class="dropdown-menu hidden">
 
-        <div class="dropdown-search mb-2 hidden">
+        <div class="dropdown-search mb-2">
             { onSearch && (
                <input
                 type="text"
                 id="search-input"
                 class="w-full p-2 rounded-lg border bg-gray-700 text-white focus:outline-none"
                 placeholder="Search"
+                value={searchQuery}
             /> 
             )}
             
         </div>
+
 
         
         {items.map((item:string, index:number) => (
@@ -53,12 +58,18 @@ const { title, items = [], links = [], onSearch  } = Astro.props;
         dropdowns.forEach((dropdown) => {
             let isOpen = false; 
             let selectedValue = ''; 
+            let searchQuery='';
 
             const button = dropdown.querySelector('.dropdown-button') as HTMLButtonElement | null;
             const dropdownMenu = dropdown.querySelector('.dropdown-menu') as HTMLElement | null;
             const searchInput = dropdown.querySelector('#search-input') as HTMLInputElement | null;
+           
 
-            const onSearch = dropdown.getAttribute('data-onSearch') as ((query:string) => void) | null;
+            //const onSearch = dropdown.getAttribute('data-onSearch') as ((query:string) => void) | null;
+            const dropdownElement = dropdown as HTMLElement;
+            const onSearch = dropdownElement.dataset.onSearch ? JSON.parse(dropdownElement.dataset.onSearch) : (query: string) => {
+                console.log('Search function is not provided, but here is the default search:', query);
+            };
 
             if (button && dropdownMenu) {
                 button.addEventListener('click', (event) => {
@@ -80,15 +91,28 @@ const { title, items = [], links = [], onSearch  } = Astro.props;
                     }
                 });
 
-                     if (searchInput && onSearch) {
-                        searchInput.addEventListener('input', (e) => {
-                        const query = (e.target as HTMLInputElement).value;
-                        if (typeof onSearch === 'function') {
-                        onSearch(query); 
-                     }
-                 });
-            }
+                console.log(searchInput)
+                console.log(onSearch)
 
+                if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    searchQuery = (e.target as HTMLInputElement).value;
+                    console.log('search query', searchQuery)
+                    if (onSearch) {
+                        onSearch(searchQuery); 
+                        console.log(searchInput)
+                    }
+                });
+
+                // Keydown event handler for 'Enter' key
+                searchInput.addEventListener('keydown', (e: KeyboardEvent) => {
+                    if (e.key === 'Enter' && onSearch) {
+                        e.preventDefault(); // Prevent default action for 'Enter'
+                        console.log('ENTER')
+                        onSearch(searchQuery); // Trigger search on Enter key
+                    }
+                });
+            }
                 document.addEventListener('click', (event) => {
                     if (isOpen && dropdownMenu && !dropdownMenu.contains(event.target as Node) && button && !button.contains(event.target as Node)) {
                         isOpen = false;
@@ -158,5 +182,3 @@ const { title, items = [], links = [], onSearch  } = Astro.props;
     }
 
 </style>
-
-

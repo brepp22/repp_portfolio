@@ -1,21 +1,20 @@
 ---
 import Dropdown from "../components/Dropdown.astro";
 
-// let citySelect = [
-//   'Austin', 'Boston', 'Chicago', 'Columbus', 'Dallas',
-//   'Denver', 'Detroit', 'El Paso', 'Fort Worth', 'Houston',
-//   'Indianapolis', 'Jacksonville', 'Las Vegas', 'Los Angeles', 'Memphis',
-//   'Miami', 'Nashville', 'New Orleans', 'New York', 'Oklahoma City',
-//   'Philadelphia', 'Phoenix', 'Portland', 'San Antonio', 'San Diego', 'San Francisco',
-//   'Seattle', 'Tucson', 'Virginia Beach', 'Washington'
-// ];
+let citySelect = [
+  'Austin', 'Boston', 'Chicago', 'Columbus', 'Dallas',
+  'Denver', 'Detroit', 'El Paso', 'Fort Worth', 'Houston',
+  'Indianapolis', 'Jacksonville', 'Las Vegas', 'Los Angeles', 'Memphis',
+  'Miami', 'Nashville', 'New Orleans', 'New York', 'Oklahoma City',
+  'Philadelphia', 'Phoenix', 'Portland', 'San Antonio', 'San Diego', 'San Francisco',
+  'Seattle', 'Tucson', 'Virginia Beach', 'Washington'
+];
 
-let citySelect = []
 
 ---
 
 
-<Dropdown items={citySelect} />
+<Dropdown  items={citySelect} onSearch/>
 
 <div id="weather-info" class="mt-4 text-center text-white font-mono bg-slate-800 dark:text-black dark:bg-slate-400">
     <p>Choose a city to see the weather...</p>
@@ -142,4 +141,3 @@ let citySelect = []
 
    
 </style>
-
