@@ -10,11 +10,15 @@ let citySelect = [
   'Seattle', 'Tucson', 'Virginia Beach', 'Washington'
 ];
 
+const handleSearch = (query) => {
+    // Filter the city list based on the search query
+    citySelect = citySelect.filter(city => city.toLowerCase().includes(query.toLowerCase()));
+};
 
 ---
 
 
-<Dropdown  items={citySelect} onSearch/>
+<Dropdown  items={citySelect} onSearch={handleSearch}/>
 
 <div id="weather-info" class="mt-4 text-center text-white font-mono bg-slate-800 dark:text-black dark:bg-slate-400">
     <p>Choose a city to see the weather...</p>

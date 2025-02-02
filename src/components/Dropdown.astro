@@ -49,7 +49,7 @@ let searchQuery ='';
     </div>
 </div>
 
-<script>
+<!-- <script>
 
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -124,6 +124,79 @@ let searchQuery ='';
         });
     });
 
+</script> -->
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const dropdowns = document.querySelectorAll('.dropdown');
+
+        dropdowns.forEach((dropdown) => {
+            let isOpen = false;
+            let selectedValue = '';
+            let searchQuery = '';
+            const button = dropdown.querySelector('.dropdown-button');
+            const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+            const searchInput = dropdown.querySelector('#search-input');
+            let items = dropdown.querySelectorAll('.dropdown-item');
+            const onSearch = dropdown.dataset.onsearch ? JSON.parse(dropdown.dataset.onsearch) : null;
+
+            
+            // Function to handle the search input
+            const handleSearch = () => {
+                if (searchInput) {
+                    searchQuery = searchInput.value.toLowerCase();
+                    // Filter items based on the search query
+                    items.forEach(item => {
+                        const itemText = item.textContent.toLowerCase();
+                        if (itemText.includes(searchQuery)) {
+                            item.classList.remove('hidden');
+                        } else {
+                            item.classList.add('hidden');
+                        }
+                    });
+
+                    // Trigger onSearch callback if provided
+                    if (onSearch) {
+                        onSearch(searchQuery);
+                    }
+                }
+            };
+
+            // Toggle dropdown visibility
+            button?.addEventListener('click', (event) => {
+                event.stopPropagation();
+                isOpen = !isOpen;
+                dropdownMenu.classList.toggle('hidden', !isOpen);
+                button.textContent = isOpen ? 'Close' : selectedValue || 'Select an Option';
+            });
+
+            // Handle item selection
+            dropdownMenu?.addEventListener('click', (event) => {
+                const target = event.target.closest('.dropdown-item');
+                if (target) {
+                    selectedValue = target.dataset.value || '';
+                    isOpen = false;
+                    button.textContent = selectedValue || 'Select an Option';
+                    dropdownMenu.classList.add('hidden');
+                }
+            });
+
+            // Handle search input event
+            if (searchInput) {
+                searchInput.addEventListener('input', handleSearch);
+            }
+
+            // Close the dropdown when clicking outside
+            document.addEventListener('click', (event) => {
+                if (isOpen && !dropdown.contains(event.target)) {
+                    isOpen = false;
+                    dropdownMenu.classList.add('hidden');
+                    button.textContent = selectedValue || 'Select an Option';
+                }
+            });
+        });
+    });
 </script>
 
 <style>
