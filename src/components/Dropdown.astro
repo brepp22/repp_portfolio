@@ -3,13 +3,12 @@ interface Props {
     title?: string;
     items: string[];
     links?: string[];
-    onSearch? : (query: string) => void;
 }
 
 
-const { title, items = [], links = [], onSearch  } = Astro.props;
+const { title, items = [], links = []  } = Astro.props;
 
-let searchQuery ='';
+
 ---
 
 <div class="dropdown relative flex justify-center">
@@ -21,20 +20,6 @@ let searchQuery ='';
     </button>
 
     <div class="dropdown-menu hidden">
-
-        <div class="dropdown-search mb-2">
-            { onSearch && (
-               <input
-                type="text"
-                id="search-input"
-                class="w-full p-2 rounded-lg border bg-gray-700 text-white focus:outline-none"
-                placeholder="Search"
-                value={searchQuery}
-            /> 
-            )}
-            
-        </div>
-
 
         
         {items.map((item:string, index:number) => (
@@ -49,7 +34,7 @@ let searchQuery ='';
     </div>
 </div>
 
-<!-- <script>
+<script>
 
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -58,18 +43,11 @@ let searchQuery ='';
         dropdowns.forEach((dropdown) => {
             let isOpen = false; 
             let selectedValue = ''; 
-            let searchQuery='';
 
             const button = dropdown.querySelector('.dropdown-button') as HTMLButtonElement | null;
             const dropdownMenu = dropdown.querySelector('.dropdown-menu') as HTMLElement | null;
-            const searchInput = dropdown.querySelector('#search-input') as HTMLInputElement | null;
-           
 
-            //const onSearch = dropdown.getAttribute('data-onSearch') as ((query:string) => void) | null;
-            const dropdownElement = dropdown as HTMLElement;
-            const onSearch = dropdownElement.dataset.onSearch ? JSON.parse(dropdownElement.dataset.onSearch) : (query: string) => {
-                console.log('Search function is not provided, but here is the default search:', query);
-            };
+        
 
             if (button && dropdownMenu) {
                 button.addEventListener('click', (event) => {
@@ -91,28 +69,8 @@ let searchQuery ='';
                     }
                 });
 
-                console.log(searchInput)
-                console.log(onSearch)
+              
 
-                if (searchInput) {
-                searchInput.addEventListener('input', (e) => {
-                    searchQuery = (e.target as HTMLInputElement).value;
-                    console.log('search query', searchQuery)
-                    if (onSearch) {
-                        onSearch(searchQuery); 
-                        console.log(searchInput)
-                    }
-                });
-
-                // Keydown event handler for 'Enter' key
-                searchInput.addEventListener('keydown', (e: KeyboardEvent) => {
-                    if (e.key === 'Enter' && onSearch) {
-                        e.preventDefault(); // Prevent default action for 'Enter'
-                        console.log('ENTER')
-                        onSearch(searchQuery); // Trigger search on Enter key
-                    }
-                });
-            }
                 document.addEventListener('click', (event) => {
                     if (isOpen && dropdownMenu && !dropdownMenu.contains(event.target as Node) && button && !button.contains(event.target as Node)) {
                         isOpen = false;
@@ -124,80 +82,8 @@ let searchQuery ='';
         });
     });
 
-</script> -->
+</script> 
 
-<script>
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const dropdowns = document.querySelectorAll('.dropdown');
-
-        dropdowns.forEach((dropdown) => {
-            let isOpen = false;
-            let selectedValue = '';
-            let searchQuery = '';
-            const button = dropdown.querySelector('.dropdown-button');
-            const dropdownMenu = dropdown.querySelector('.dropdown-menu');
-            const searchInput = dropdown.querySelector('#search-input');
-            let items = dropdown.querySelectorAll('.dropdown-item');
-            const onSearch = dropdown.dataset.onsearch ? JSON.parse(dropdown.dataset.onsearch) : null;
-
-            
-            // Function to handle the search input
-            const handleSearch = () => {
-                if (searchInput) {
-                    searchQuery = searchInput.value.toLowerCase();
-                    // Filter items based on the search query
-                    items.forEach(item => {
-                        const itemText = item.textContent.toLowerCase();
-                        if (itemText.includes(searchQuery)) {
-                            item.classList.remove('hidden');
-                        } else {
-                            item.classList.add('hidden');
-                        }
-                    });
-
-                    // Trigger onSearch callback if provided
-                    if (onSearch) {
-                        onSearch(searchQuery);
-                    }
-                }
-            };
-
-            // Toggle dropdown visibility
-            button?.addEventListener('click', (event) => {
-                event.stopPropagation();
-                isOpen = !isOpen;
-                dropdownMenu.classList.toggle('hidden', !isOpen);
-                button.textContent = isOpen ? 'Close' : selectedValue || 'Select an Option';
-            });
-
-            // Handle item selection
-            dropdownMenu?.addEventListener('click', (event) => {
-                const target = event.target.closest('.dropdown-item');
-                if (target) {
-                    selectedValue = target.dataset.value || '';
-                    isOpen = false;
-                    button.textContent = selectedValue || 'Select an Option';
-                    dropdownMenu.classList.add('hidden');
-                }
-            });
-
-            // Handle search input event
-            if (searchInput) {
-                searchInput.addEventListener('input', handleSearch);
-            }
-
-            // Close the dropdown when clicking outside
-            document.addEventListener('click', (event) => {
-                if (isOpen && !dropdown.contains(event.target)) {
-                    isOpen = false;
-                    dropdownMenu.classList.add('hidden');
-                    button.textContent = selectedValue || 'Select an Option';
-                }
-            });
-        });
-    });
-</script>
 
 <style>
     .dropdown-menu {
