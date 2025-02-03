@@ -13,7 +13,15 @@ let citySelect = [
 
 
 ---
+<div id ='weather-search'>
+    <input
+        id="weather-input"
+        placeholder="search..."
+    />
 
+    <button id="search-button" class="text-red-600 bg-slate-400"> Click Me</button>
+   
+</div>
 
 <Dropdown  items={citySelect}/>
 
@@ -105,6 +113,36 @@ let citySelect = [
     const [year, month, day] = dateString.split('-'); 
     return `${month}-${day}-${year}`; 
 };
+document.addEventListener("DOMContentLoaded", () => {
+        const dropdownItems = document.querySelectorAll(".dropdown-item"); 
+        dropdownItems.forEach(item => {
+            item.addEventListener("click", handleSelection); 
+        });
+    });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const searchButton = document.getElementById("search-button");
+  const weatherInput = document.getElementById("weather-input");
+searchButton.addEventListener("click", () => {
+    const searchQuery = weatherInput.value.trim();
+    if(searchQuery !== '') {
+      fetchWeatherData(searchQuery);
+    } else {
+      alert("Please enter a city or zip code");
+    }
+  });
+weatherInput.addEventListener("keyup", (event) => {
+    if(event.key === "Enter") {
+      const searchQuery = weatherInput.value.trim();
+      if(searchQuery !== '') {
+        fetchWeatherData(searchQuery);
+      } else {
+        alert("Please enter a city or zip code");
+      }
+    }
+  });
+});
+
 </script>
 
 
