@@ -15,11 +15,11 @@ let citySelect = [
 ---
 <div id ='weather-search'>
     <input
-        id="weather-input"
+        id="weather-input" class="w-full p-2 rounded-md border-gray-500"
         placeholder="search..."
     />
 
-    <button id="search-button" class="text-red-600 bg-slate-400"> Click Me</button>
+    <button id="search-button" class="text-red-600 bg-slate-400 w-full p-1 mt-2 rounded-md">Search</button>
    
 </div>
 
@@ -165,6 +165,31 @@ weatherInput.addEventListener("keyup", (event) => {
     #weather-info p {
         margin: 10px 0; 
         font-size: 25px;
+    }
+
+    #weather-input{
+        font-family: monospace;
+        padding: 8px;
+        border-radius: 10px;
+        max-height: 400px;
+        max-width: 320px;
+    }
+
+    #search-button{
+        display:flex;
+        justify-content: center;
+        font-family: monospace;
+        padding: 8px;
+        border-radius: 10px;
+        max-height: 400px;
+        max-width: 320px;
+    }
+
+    #weather-search{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items:center;
     }
 
     @media (max-width: 600px){
