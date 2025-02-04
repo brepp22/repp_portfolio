@@ -41,7 +41,13 @@ let citySelect = [
             }
             const data = await response.json();
 
-            console.log('Weather Data:', data);
+            const apiCityName = data.nearest_area[0].areaName[0].value;
+            console.log(apiCityName)
+
+            if (cityName.toLowerCase() !== apiCityName.toLowerCase()) {
+                throw new Error(`No City Found By That Name`);
+                return; 
+            }
             
             // Current Weather
             const current = data.current_condition[0];
@@ -128,7 +134,7 @@ searchButton.addEventListener("click", () => {
     if(searchQuery !== '') {
       fetchWeatherData(searchQuery);
     } else {
-      alert("Please enter a city or zip code");
+      throw new Error("Please enter a city or zip code");
     }
   });
 weatherInput.addEventListener("keyup", (event) => {
