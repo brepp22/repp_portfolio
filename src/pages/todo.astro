@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro"
 import Main from "../components/Main.astro"
+import List from "../components/List.astro"
 
 ---
 
@@ -8,11 +9,9 @@ import Main from "../components/Main.astro"
   <Main>
 
     <h1>To Do List:</h1>
-    <input 
+   
+    <List item={[]}/>
 
-        
-    />
-
-    <button id="todo-button">Submit</button>
+    
   </Main>
 </Layout>

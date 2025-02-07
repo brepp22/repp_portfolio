@@ -1,0 +1,113 @@
+---
+interface Props {
+    item: string[];
+}
+
+const {item} = Astro.props;
+
+---
+
+<div id = 'list-container'>
+    <input
+        id="input-bar"
+        placeholder="type here"
+    />
+
+    <button id="list-button">
+        Click Me!
+    </button>
+
+    <div id="list-items">
+      
+        {(
+          item.map((i, index) => (
+            <div class="list-item" data-value={i}>
+              <ul>{i} </ul>
+                <button id="complete-btn">Completed</button>
+                <button id ="edit-btn">Edit</button>
+                <button id="delete-btn">Delete</button>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+
+</div>
+
+<script>
+import { imageConfig } from "astro:assets";
+import Index from "../pages/index.astro";
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const inputBar = document.getElementById("input-bar") as HTMLInputElement;
+  const listButton = document.getElementById("list-button") as HTMLButtonElement | null;
+  const listContainer = document.getElementById("list-items") as HTMLElement | null;
+  const completeButton = document.getElementById("complete-btn") as HTMLButtonElement;
+  const editButton = document.getElementById("edit-btn") as HTMLButtonElement ;
+  const deleteButton = document.getElementById("delete-btn") as HTMLButtonElement;
+
+  listButton?.addEventListener("click", function () {
+    const inputValue = inputBar?.value.trim();
+    if (inputValue) {
+      const newItem = document.createElement("div");
+      newItem.classList.add("list-item");
+
+      newItem.innerHTML = `<ul>${inputValue}</ul>
+                <button class="complete-btn">Completed</button>
+                <button class="edit-btn">Edit</button>
+                <button class="delete-btn">Delete</button>
+            `;
+      listContainer?.appendChild(newItem);
+      inputBar.value = ""; 
+    }
+  });
+
+  listContainer?.addEventListener("click", function (event) {
+        const target = event.target as HTMLElement;
+        
+        if (target?.classList.contains("delete-btn")) {
+            target.closest(".list-item")?.remove();
+        }
+   
+    if (target.classList.contains("edit-btn")) {
+            const listItem = target.closest(".list-item");
+            const listText = listItem?.querySelector("ul");
+
+            if (listText) {
+                const currentText = listText.innerText;
+                const inputField = document.createElement("input");
+                inputField.type = "text";
+                inputField.value = currentText;
+                
+                listText.replaceWith(inputField);
+
+                inputField.addEventListener("blur", function () {
+                    listText.innerText = inputField.value; 
+                    inputField.replaceWith(listText); 
+                });
+                inputField.focus();
+            }
+        }
+
+        if (target.classList.contains('complete-btn')) {
+        const listItem = target.closest(".list-item");
+        const listText = listItem?.querySelector('ul');
+        
+        if (listText) {
+            if (!listText.innerText.endsWith('x')) {
+                listText.append('x');
+            } else {
+                listText.innerText = listText.innerText.slice(0, -1);
+            }
+        }
+    }
+    });
+});
+
+</script>
+
+<style>
+
+
+</style>
