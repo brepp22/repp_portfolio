@@ -10,10 +10,11 @@ const {item} = Astro.props;
 <div id = 'list-container'>
     <input
         id="input-bar"
+        class ="w-[320px] h-10 p-2 rounded-md border-gray-500 text-black font-mono"
         placeholder="type here"
     />
 
-    <button id="list-button">
+    <button id="list-button" class = "mt-2 p-2 rounded-md bg-gray-800 dark:bg-slate-400 text-white dark:text-black w-[125px] h-10 font-mono hover:text-blue-400 dark:hover:text-blue-900">
         Click Me!
     </button>
 
@@ -22,7 +23,7 @@ const {item} = Astro.props;
         {(
           item.map((i, index) => (
             <div class="list-item" data-value={i}>
-              <ul>{i} </ul>
+              <ul>{i}</ul>
                 <button id="complete-btn">Completed</button>
                 <button id ="edit-btn">Edit</button>
                 <button id="delete-btn">Delete</button>
@@ -35,17 +36,11 @@ const {item} = Astro.props;
 </div>
 
 <script>
-import { imageConfig } from "astro:assets";
-import Index from "../pages/index.astro";
-
 
 document.addEventListener("DOMContentLoaded", function () {
   const inputBar = document.getElementById("input-bar") as HTMLInputElement;
   const listButton = document.getElementById("list-button") as HTMLButtonElement | null;
   const listContainer = document.getElementById("list-items") as HTMLElement | null;
-  const completeButton = document.getElementById("complete-btn") as HTMLButtonElement;
-  const editButton = document.getElementById("edit-btn") as HTMLButtonElement ;
-  const deleteButton = document.getElementById("delete-btn") as HTMLButtonElement;
 
   listButton?.addEventListener("click", function () {
     const inputValue = inputBar?.value.trim();
@@ -108,6 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <style>
-
-
+    #list-items{
+        font-family:monospace;
+    }
 </style>
