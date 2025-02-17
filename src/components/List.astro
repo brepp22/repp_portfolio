@@ -122,8 +122,8 @@ document.addEventListener("DOMContentLoaded", function () {
         list-style: none;
     }
 
-    :global(.list-item).list-item {
-    margin-bottom: 10px; 
+    :global(.list-item) {
+    margin-bottom: 20px; 
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -134,6 +134,9 @@ document.addEventListener("DOMContentLoaded", function () {
         color: white;
         padding: 5px 10px;
         font-size: 12px;
+        border-radius: 5px;
+        font-family: monospace;
+        padding-left: 5px;
     }   
 
     :global(.edit-btn){
@@ -141,12 +144,16 @@ document.addEventListener("DOMContentLoaded", function () {
         color:white;
         padding: 5px 10px;
         font-size: 12px;
+        border-radius: 5px;
+        font-family: monospace;
     }
     :global(.delete-btn){
         background-color: red;
         color:white;
         padding: 5px 10px;
         font-size: 12px;
+        border-radius: 5px;
+        font-family: monospace;
     }
 
 </style>
