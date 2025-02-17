@@ -24,7 +24,7 @@ const {item} = Astro.props;
         {(
           item.map((i, index) => (
             <div class="list-item align-center" data-value={i}>
-              <ul>{i}</ul>
+              <span>{i}</span>
                 <button id="complete-btn">Completed</button>
                 <button id ="edit-btn">Edit</button>
                 <button id="delete-btn">Delete</button>
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const newItem = document.createElement("div");
       newItem.classList.add("list-item");
 
-      newItem.innerHTML = `<ul>${inputValue}</ul>
+      newItem.innerHTML = `<span>${inputValue}</span>
                 <button class="complete-btn">Completed</button>
                 <button class="edit-btn">Edit</button>
                 <button class="delete-btn">Delete</button>
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
    
     if (target.classList.contains("edit-btn")) {
             const listItem = target.closest(".list-item");
-            const listText = listItem?.querySelector("ul");
+            const listText = listItem?.querySelector("span");
 
             if (listText) {
                 let currentText = listText.innerText;
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (target.classList.contains('complete-btn')) {
         const listItem = target.closest(".list-item");
-        const listText = listItem?.querySelector('ul');
+        const listText = listItem?.querySelector("span");
         
         if (listText) {
             if (!listText.innerText.endsWith('✅')) {
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     :global(.list-item).list-item {
-    margin-bottom: 10px; /* Adjust spacing as needed */
+    margin-bottom: 10px; 
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -147,4 +147,5 @@ document.addEventListener("DOMContentLoaded", function () {
         padding: 5px 10px;
         font-size: 12px;
     }
+
 </style>
