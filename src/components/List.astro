@@ -11,11 +11,13 @@ const {item} = Astro.props;
     <div id="input-wrapper">
     <input
         id="input-bar"
-        class ="w-[320px] h-10 p-2 rounded-md border-gray-500 text-white font-mono bg-slate-800 dark:bg-slate-400 dark:text-black "
-        placeholder="type here"
+        class ="w-[320px] h-10 p-2 rounded-md border-gray-500 dark:placeholder-black font-mono bg-slate-800 dark:bg-slate-400"
+        placeholder="Type Todo Here..."
     />
 
-    <button id="list-button" class = "mt-2 p-2 rounded-md bg-gray-800 dark:bg-slate-400 text-white dark:text-black w-[125px] h-10 font-mono hover:text-blue-400 dark:hover:text-blue-900">
+    <button id="list-button" class = "mt-2 p-2 rounded-md bg-gray-800 dark:bg-slate-400
+         text-white dark:text-black w-[125px] h-10 font-mono hover:text-blue-400
+         dark:hover:text-blue-900">
         Click Me!
     </button>
 </div>
