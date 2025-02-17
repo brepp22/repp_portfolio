@@ -11,7 +11,7 @@ const {item} = Astro.props;
     <div id="input-wrapper">
     <input
         id="input-bar"
-        class ="w-[320px] h-10 p-2 rounded-md border-gray-500 text-black font-mono"
+        class ="w-[320px] h-10 p-2 rounded-md border-gray-500 text-white font-mono bg-slate-800 dark:bg-slate-400 dark:text-black "
         placeholder="type here"
     />
 
@@ -75,10 +75,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 if(currentText.endsWith(('✅'))){
                     currentText = currentText.slice(0, -1);
                     }
+
                 const inputField = document.createElement("input");
                 inputField.type = "text";
                 inputField.value = currentText;
-                
+                inputField.classList.add(
+                "dark:bg-white", "dark:text-black", "bg-slate-800", 
+                "text-white", "border", "border-gray-500", "rounded-md", "p-1"
+                );
+                 
                 listText.replaceWith(inputField);
 
                 inputField.addEventListener("blur", function () {
@@ -107,6 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <style>
+
     #list-container {
     display: flex;
     flex-direction: column;
@@ -125,7 +131,6 @@ document.addEventListener("DOMContentLoaded", function () {
     :global(.list-item) {
     margin-bottom: 20px; 
     padding: 10px;
-    border: 1px solid #ccc;
     border-radius: 5px;
 }
 
@@ -133,27 +138,30 @@ document.addEventListener("DOMContentLoaded", function () {
         background-color: green;
         color: white;
         padding: 5px 10px;
-        font-size: 12px;
+        font-size: 15px;
         border-radius: 5px;
         font-family: monospace;
         padding-left: 5px;
+        align-items: center;
     }   
 
     :global(.edit-btn){
         background-color: blue;
         color:white;
         padding: 5px 10px;
-        font-size: 12px;
+        font-size: 15px;
         border-radius: 5px;
         font-family: monospace;
+        align-items: center;
     }
     :global(.delete-btn){
         background-color: red;
         color:white;
         padding: 5px 10px;
-        font-size: 12px;
+        font-size: 15px;
         border-radius: 5px;
         font-family: monospace;
+        align-items: center;
     }
 
 </style>
