@@ -23,67 +23,76 @@ let citySelect = [
    
 </div>
 
-<Dropdown  title={"Select a City"}items={citySelect}/>
+<Dropdown  title={"Select a City"} items={citySelect}/>
 
 <div id="weather-info" class="mt-4 text-center text-white font-mono bg-slate-800 dark:text-black dark:bg-slate-400">
     <p>Choose a city to see the weather...</p>
 </div>
 
 <script type="module">
-    const fetchWeatherData = async (cityName) => {
-        const weatherInfo = document.getElementById('weather-info');
-        const cityCode = encodeURIComponent(cityName);
-        
-        try {
-            const response = await fetch(`https://wttr.in/${cityCode}?format=j1`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
-
-            const apiCityName = data.nearest_area[0].areaName[0].value;
-            console.log(apiCityName)
-
-            if (cityName.toLowerCase() !== apiCityName.toLowerCase()) {
-                throw new Error(`No City Found By That Name`);
-                return; 
-            }
-            
-            // Current Weather
-            const current = data.current_condition[0];
-            const weatherDescription = current.weatherDesc[0].value;
-            const weatherEmoji = getWeatherEmoji(weatherDescription);
-
-            // Daily Forecast (next 3 days)
-            const dailyForecast = data.weather.slice(0, 3).map(day => `
-                <div class="daily-forecast bg-slate-700 rounded-lg p-4 mb-2 text-lg dark:text-black dark:bg-slate-300">
-                    <h3 class="text-lg font-bold">${formatDate(day.date)}</h3>
-                    <p>Average Temp: ${day.avgtempF} °F </p>
-                    <p>Weather: ${getWeatherEmoji(day.hourly[0].weatherDesc[0].value)} ${day.hourly[0].weatherDesc[0].value}</p>
-                    <p>Sunrise: ${day.astronomy[0].sunrise} | Sunset: ${day.astronomy[0].sunset}</p>
-                </div>
-            `).join('');
-
-            weatherInfo.innerHTML = `
-                <h2 class="weather-title text-2xl font-mono font-bold mt-4 mb-4 dark:text-black">${cityName}</h2>
-                <p class="text-white font-mono text-lg dark:text-black">Current Temperature: ${current.temp_F} °F</p>
-                <p class="text-white font-mono text-lg dark:text-black">Feels Like: ${current.FeelsLikeF} °F</p>
-                <p class="text-white font-mono text-lg dark:text-black">
-                    Weather Description: ${weatherEmoji} ${weatherDescription.trim()}
-                </p>
-                <p class="text-white font-mono text-lg dark:text-black">Humidity: ${current.humidity}%</p>
-                <p class="text-white font-mono text-lg dark:text-black">Wind Speed: ${current.windspeedMiles} mph</p>
-                <div class="daily-forecasts mt-6">
-                    <h3 class="text-lg font-bold text-white dark:text-black">3-Day Forecast</h3>
-                    ${dailyForecast}
-                </div>
-            `;
-        } catch (err) {
-            console.error('Fetch error:', err.message);
-            weatherInfo.innerHTML = `<p class="text-white">Cannot Find Weather For ${cityName}</p>`;
+    const fetchWeatherData = async (locationInput) => {
+    const weatherInfo = document.getElementById('weather-info');
+    
+    const locationParts = locationInput.replace(/,/g, '').trim().split(/\s+/); 
+    const cityName = locationParts.length === 1 ? locationParts[0] : locationParts.slice(0, -1).join(' '); 
+    const userState = locationParts.length > 1 ? locationParts[locationParts.length - 1].toLowerCase() : null; 
+    
+    const cityCode = encodeURIComponent(cityName);
+    
+    try {
+        const response = await fetch(`https://wttr.in/${cityCode}?format=j1`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-    };
+        const data = await response.json();
 
+        const apiCityName = data.nearest_area[0].areaName[0].value;
+        const apiState = data.nearest_area[0].region[0].value; 
+
+        console.log(`API City: ${apiCityName}, API State: ${apiState}`);
+
+       
+        if (
+            cityName.toLowerCase() !== apiCityName.toLowerCase() || 
+            (userState && userState !== apiState.toLowerCase()) 
+        ) {
+            throw new Error(`No City Found Matching "${locationInput}"`);
+        }
+
+        // Current Weather
+        const current = data.current_condition[0];
+        const weatherDescription = current.weatherDesc[0].value;
+        const weatherEmoji = getWeatherEmoji(weatherDescription);
+
+        // Daily Forecast (next 3 days)
+        const dailyForecast = data.weather.slice(0, 3).map(day => `
+            <div class="daily-forecast bg-slate-700 rounded-lg p-4 mb-2 text-lg dark:text-black dark:bg-slate-300">
+                <h3 class="text-lg font-bold">${formatDate(day.date)}</h3>
+                <p>Average Temp: ${day.avgtempF} °F </p>
+                <p>Weather: ${getWeatherEmoji(day.hourly[0].weatherDesc[0].value)} ${day.hourly[0].weatherDesc[0].value}</p>
+                <p>Sunrise: ${day.astronomy[0].sunrise} | Sunset: ${day.astronomy[0].sunset}</p>
+            </div>
+        `).join('');
+
+        weatherInfo.innerHTML = `
+            <h2 class="weather-title text-2xl font-mono font-bold mt-4 mb-4 dark:text-black">${apiCityName}, ${apiState}</h2>
+            <p class="text-white font-mono text-lg dark:text-black">Current Temperature: ${current.temp_F} °F</p>
+            <p class="text-white font-mono text-lg dark:text-black">Feels Like: ${current.FeelsLikeF} °F</p>
+            <p class="text-white font-mono text-lg dark:text-black">
+                Weather Description: ${weatherEmoji} ${weatherDescription.trim()}
+            </p>
+            <p class="text-white font-mono text-lg dark:text-black">Humidity: ${current.humidity}%</p>
+            <p class="text-white font-mono text-lg dark:text-black">Wind Speed: ${current.windspeedMiles} mph</p>
+            <div class="daily-forecasts mt-6">
+                <h3 class="text-lg font-bold text-white dark:text-black">3-Day Forecast</h3>
+                ${dailyForecast}
+            </div>
+        `;
+    } catch (err) {
+        console.error('Fetch error:', err.message);
+        weatherInfo.innerHTML = `<p class="text-white">Cannot Find Weather For "${locationInput}"</p>`;
+    }
+};
     const handleSelection = (event) => {
         const selectedValue = event.target.getAttribute('data-value'); 
         if (selectedValue) {
