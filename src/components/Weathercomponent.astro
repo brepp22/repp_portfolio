@@ -79,8 +79,8 @@ let citySelect = [
                 </div>
             `;
         } catch (err) {
-            console.error('Fetch error:', err);
-            weatherInfo.innerHTML = `<p class="text-white">Error fetching data: ${err.message}</p>`;
+            console.error('Fetch error:', err.message);
+            weatherInfo.innerHTML = `<p class="text-white">Cannot Find Weather For ${cityName}</p>`;
         }
     };
 
