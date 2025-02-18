@@ -30,34 +30,50 @@ let citySelect = [
 </div>
 
 <script type="module">
-    const fetchWeatherData = async (locationInput) => {
+const fetchWeatherData = async (locationInput) => {
     const weatherInfo = document.getElementById('weather-info');
+    locationInput = locationInput.trim();
     
-    const locationParts = locationInput.replace(/,/g, '').trim().split(/\s+/); 
-    const cityName = locationParts.length === 1 ? locationParts[0] : locationParts.slice(0, -1).join(' '); 
-    const userState = locationParts.length > 1 ? locationParts[locationParts.length - 1].toLowerCase() : null; 
-    
+    let cityName, userState;
+
+    if (locationInput.includes(',')) {
+        // Case 1: User included a comma → "City, State"
+        [cityName, userState] = locationInput.split(',').map(part => part.trim());
+    } else {
+        // Case 2: No comma 
+        const parts = locationInput.split(' ');
+        const lastWord = parts[parts.length - 1];
+
+        if (isStateName(lastWord) || isStateAbbreviation(lastWord)) {
+            userState = lastWord;
+            cityName = parts.slice(0, -1).join(' '); 
+        } else {
+            cityName = locationInput;
+            userState = null; 
+        }
+    }
+
     const cityCode = encodeURIComponent(cityName);
-    
+
     try {
         const response = await fetch(`https://wttr.in/${cityCode}?format=j1`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
+        const data = await response.json();
         const apiCityName = data.nearest_area[0].areaName[0].value;
-        const apiState = data.nearest_area[0].region[0].value; 
+        const apiState = data.nearest_area[0].region[0].value; // State from API
 
         console.log(`API City: ${apiCityName}, API State: ${apiState}`);
 
-       
-        if (
-            cityName.toLowerCase() !== apiCityName.toLowerCase() || 
-            (userState && userState !== apiState.toLowerCase()) 
-        ) {
+        if (cityName.toLowerCase() !== apiCityName.toLowerCase()) {
             throw new Error(`No City Found Matching "${locationInput}"`);
         }
+
+        if (userState && !stateMatch(userState, apiState)) {
+            throw new Error(`No City Found Matching "${locationInput}"`);
+        }
+
+  
 
         // Current Weather
         const current = data.current_condition[0];
@@ -93,6 +109,54 @@ let citySelect = [
         weatherInfo.innerHTML = `<p class="text-white">Cannot Find Weather For "${locationInput}"</p>`;
     }
 };
+
+//Helper Function : Check word is full state name
+const isStateName = (word) => {
+    const stateNames = [
+        "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
+        "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", 
+        "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", 
+        "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", 
+        "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", 
+        "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", 
+        "West Virginia", "Wisconsin", "Wyoming"
+    ];
+    return stateNames.includes(word);
+};
+
+// Helper function: Check if a word is a state abbreviation (e.g., TX, CA)
+const isStateAbbreviation = (word) => {
+    const stateAbbreviations = [
+        "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE",
+        "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", 
+        "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", 
+        "MT", "NE", "NV", "NH", "NJ", "NM", "NY", 
+        "NC", "ND", "OH", "OK", "OR", "PA", "RI", 
+        "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", 
+        "WV", "WI", "WY"
+    ];
+    return stateAbbreviations.includes(word.toUpperCase());
+};
+
+// Helper function: Allow matching state abbreviations and full names
+const stateMatch = (userState, apiState) => {
+    const stateMapping = {
+        "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California",
+        "CO": "Colorado", "CT": "Connecticut", "DE": "Delaware", "FL": "Florida", "GA": "Georgia",
+        "HI": "Hawaii", "ID": "Idaho", "IL": "Illinois", "IN": "Indiana", "IA": "Iowa", "KS": "Kansas",
+        "KY": "Kentucky", "LA": "Louisiana", "ME": "Maine", "MD": "Maryland", "MA": "Massachusetts",
+        "MI": "Michigan", "MN": "Minnesota", "MS": "Mississippi", "MO": "Missouri", "MT": "Montana",
+        "NE": "Nebraska", "NV": "Nevada", "NH": "New Hampshire", "NJ": "New Jersey", "NM": "New Mexico",
+        "NY": "New York", "NC": "North Carolina", "ND": "North Dakota", "OH": "Ohio", "OK": "Oklahoma",
+        "OR": "Oregon", "PA": "Pennsylvania", "RI": "Rhode Island", "SC": "South Carolina", "SD": "South Dakota",
+        "TN": "Tennessee", "TX": "Texas", "UT": "Utah", "VT": "Vermont", "VA": "Virginia", "WA": "Washington",
+        "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming"
+    };
+
+    const userStateNormalized = userState.length === 2 ? stateMapping[userState.toUpperCase()] : userState;
+    return userStateNormalized && userStateNormalized.toLowerCase() === apiState.toLowerCase();
+};
+
     const handleSelection = (event) => {
         const selectedValue = event.target.getAttribute('data-value'); 
         if (selectedValue) {
