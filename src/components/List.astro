@@ -45,7 +45,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const listButton = document.getElementById("list-button") as HTMLButtonElement | null;
   const listContainer = document.getElementById("list-items") as HTMLElement | null;
 
-  listButton?.addEventListener("click", function () {
+  inputBar?.addEventListener("keyup" , function(event) {
+    if(event.key === "Enter"){
+        addTodo();
+    }
+  });
+
+  listButton?.addEventListener("click" , addTodo);
+
+  function addTodo() {
     const inputValue = inputBar?.value.trim();
     if (inputValue) {
       const newItem = document.createElement("div");
@@ -62,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
       listContainer?.appendChild(newItem);
       inputBar.value = ""; 
     }
-  });
+  };
 
   listContainer?.addEventListener("click", function (event) {
         const target = event.target as HTMLElement;
@@ -90,6 +98,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
                  
                 listText.replaceWith(inputField);
+
+                inputField.addEventListener("keyup" , function(event) {
+                    if(event.key === "Enter"){
+                        listText.innerText = inputField.value;
+                        inputField.replaceWith(listText)
+                    }
+                });
 
                 inputField.addEventListener("blur", function () {
                     listText.innerText = inputField.value; 
@@ -119,11 +134,11 @@ document.addEventListener("DOMContentLoaded", function () {
 <style>
 
     #list-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
     }
 
     #list-items{
