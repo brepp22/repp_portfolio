@@ -27,7 +27,7 @@ const {item} = Astro.props;
           item.map((i, index) => (
             <div class="list-item align-center" data-value={i}>
               <span>{i}</span>
-                <button id="complete-btn">Completed</button>
+                <button id="complete-btn" class="bg-green-300">Completed</button>
                 <button id ="edit-btn">Edit</button>
                 <button id="delete-btn">Delete</button>
             </div>
@@ -52,9 +52,12 @@ document.addEventListener("DOMContentLoaded", function () {
       newItem.classList.add("list-item");
 
       newItem.innerHTML = `<span>${inputValue}</span>
-                <button class="complete-btn">Completed</button>
-                <button class="edit-btn">Edit</button>
-                <button class="delete-btn">Delete</button>
+                <button class="complete-btn text-white px-3 py-1 text-[15px] rounded-md font-mono  items-center
+                    dark:bg-indigo-400 bg-indigo-800 dark:text-black ">Completed</button>
+                <button class="edit-btn text-white px-3 py-1 text-[15px] rounded-md font-mono  items-center 
+                    bg-slate-800 dark:bg-slate-400 dark:text-black">Edit</button>
+                <button class="delete-btn text-white px-3 py-1 text-[15px] rounded-md font-mono  items-center
+                   bg-red-900 dark:text-black dark:bg-red-700">Delete</button>
             `;
       listContainer?.appendChild(newItem);
       inputBar.value = ""; 
@@ -136,8 +139,8 @@ document.addEventListener("DOMContentLoaded", function () {
     border-radius: 5px;
 }
 
-    :global(.complete-btn) {
-        background-color: green;
+    /* :global(.complete-btn) {
+        background-color: rgb(68,73,120);
         color: white;
         padding: 5px 10px;
         font-size: 15px;
@@ -163,6 +166,6 @@ document.addEventListener("DOMContentLoaded", function () {
         border-radius: 5px;
         font-family: monospace;
         align-items: center;
-    }
+    } */
 
 </style>
