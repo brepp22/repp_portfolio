@@ -15,11 +15,11 @@ let citySelect = [
 ---
 <div id ='weather-search'>
     <input
-        id="weather-input" class="w-full p-2 rounded-md border-gray-500 text-black h-12 mt-2 text-sm"
+        id="weather-input" class="w-full p-2 rounded-md border-gray-500 text-black h-12 mt-2 text-xs sm:xs md:text-base lg:text-lg"
         placeholder="Search Weather by City's Name..."
     />
 
-    <button id="search-button" class="dark:text-black bg-gray-800 dark:bg-slate-400 w-full p-2 mt-2 rounded-md h-10 text-base hover:text-blue-400 dark:hover:text-blue-900">Search</button>
+    <button id="search-button" class="dark:text-black bg-gray-800 dark:bg-slate-400 w-full p-2 mt-2 rounded-md h-10 text-sm sm:text-base md:text-lg lg:text-xl hover:text-blue-400 dark:hover:text-blue-900 ">Search</button>
    
 </div>
 
@@ -91,16 +91,16 @@ const fetchWeatherData = async (locationInput) => {
         `).join('');
 
         weatherInfo.innerHTML = `
-            <h2 class="weather-title text-2xl font-mono font-bold mt-4 mb-4 dark:text-black">${apiCityName}, ${apiState}</h2>
-            <p class="text-white font-mono text-lg dark:text-black">Current Temperature: ${current.temp_F} °F</p>
-            <p class="text-white font-mono text-lg dark:text-black">Feels Like: ${current.FeelsLikeF} °F</p>
-            <p class="text-white font-mono text-lg dark:text-black">
+            <h2 class="weather-title text-2xl text-lg sm:text-lg md:text-2xl lg:text-2xl font-mono font-bold mt-4 mb-4 dark:text-black">${apiCityName}, ${apiState}</h2>
+            <p class="text-white font-mono text-sm sm:text-base md:text-lg lg:text-xl dark:text-black">Current Temperature: ${current.temp_F} °F</p>
+            <p class="text-white font-mono text-sm sm:text-base md:text-lg lg:text-xl dark:text-black">Feels Like: ${current.FeelsLikeF} °F</p>
+            <p class="text-white font-mono text-sm sm:text-base md:text-lg lg:text-xl dark:text-black">
                 Weather Description: ${weatherEmoji} ${weatherDescription.trim()}
             </p>
-            <p class="text-white font-mono text-lg dark:text-black">Humidity: ${current.humidity}%</p>
-            <p class="text-white font-mono text-lg dark:text-black">Wind Speed: ${current.windspeedMiles} mph</p>
+            <p class="text-white font-mono text-sm sm:text-base md:text-lg lg:text-xl dark:text-black">Humidity: ${current.humidity}%</p>
+            <p class="text-white font-mono text-sm sm:text-base md:text-lg lg:text-xl dark:text-black">Wind Speed: ${current.windspeedMiles} mph</p>
             <div class="daily-forecasts mt-6">
-                <h3 class="text-lg font-bold text-white dark:text-black">3-Day Forecast</h3>
+                <h3 class="text-2xl text-base sm:text-base md:text-2xl lg:text-3xl font-bold text-white dark:text-black">3-Day Forecast</h3>
                 ${dailyForecast}
             </div>
         `;
@@ -276,9 +276,13 @@ weatherInput.addEventListener("keyup", (event) => {
             width: 95%; 
             max-width: 95%; 
             margin: 10px auto;
-            padding: 15px;
             overflow: auto; 
         }
+
+    #weather-info{
+        color:red;
+    }
+  
     }
    
 
