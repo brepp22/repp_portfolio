@@ -27,7 +27,7 @@ let citySelect = [
 <Dropdown  title={"Select a City"} items={citySelect}/>
 
 <div id="weather-info" class="mt-4 text-center text-white font-mono bg-slate-800 dark:text-black dark:bg-slate-400">
-    <p>Choose a city to see the weather...</p>
+    <p>Search or choose a city from the dropdown to see its weather...</p>
 </div>
 
 <script type="module">
@@ -274,9 +274,8 @@ weatherInput.addEventListener("keyup", (event) => {
 
     @media (max-width: 600px){
          #weather-info {
-            width: 85%; 
-            max-width: 85%; 
             max-height: 500px;
+            width: 80%;
             overflow: auto;  
             font-size: medium;
             display: flex;
