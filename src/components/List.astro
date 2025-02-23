@@ -11,12 +11,13 @@ const {item} = Astro.props;
     <div id="input-wrapper">
     <input
         id="input-bar"
-        class ="w-[320px] h-10 p-2 rounded-md border-gray-500 dark:placeholder-black font-mono bg-slate-800 dark:bg-slate-400"
+        class ="w-[320px] sm:w-[220px] md:w-[275px] h-10 p-2 rounded-md border-gray-500 dark:placeholder-black font-mono
+        text-sm sm:sm md:sm lg:text-base bg-slate-800 dark:bg-slate-400"
         placeholder="Type To Do Here..."
     />
 
     <button id="list-button" class = "mt-2 p-2 rounded-md bg-gray-800 dark:bg-slate-400
-         text-white dark:text-black w-[125px] h-10 font-mono hover:text-blue-400
+         text-white dark:text-black w-[125px] sm:w-[100px] text-sm sm:sm md:sm lg:text-sm h-10 font-mono hover:text-blue-400
          dark:hover:text-blue-900">
         Click Me!
     </button>
@@ -27,7 +28,7 @@ const {item} = Astro.props;
           item.map((i, index) => (
             <div class="list-item align-center" data-value={i}>
               <span>{i}</span>
-                <button id="complete-btn" class="bg-green-300">Completed</button>
+                <button id="complete-btn">Completed</button>
                 <button id ="edit-btn">Edit</button>
                 <button id="delete-btn">Delete</button>
             </div>
@@ -60,11 +61,12 @@ document.addEventListener("DOMContentLoaded", function () {
       newItem.classList.add("list-item", "mb-5" , "p-2", "rounded-md");
 
       newItem.innerHTML = `<span>${inputValue}</span>
-                <button class="complete-btn text-white px-3 py-1 text-[15px] rounded-md font-mono  items-center
+                <div class='sm:block md:hidden lg:hidden xlg:hidden py-1'></div>
+                <button class="complete-btn text-white px-3 py-1 text-[12px] sm:text-[12px] md:text-[15px] lg:text-[15px] rounded-md font-mono  items-center
                     dark:bg-indigo-400 bg-indigo-800 dark:text-black ">Completed</button>
-                <button class="edit-btn text-white px-3 py-1 text-[15px] rounded-md font-mono  items-center 
+                <button class="edit-btn text-white px-3 py-1 text-[12px] sm:text-[12px] md:text-[15px] lg:text-[15px] rounded-md font-mono  items-center 
                     bg-slate-800 dark:bg-slate-400 dark:text-black">Edit</button>
-                <button class="delete-btn text-white px-3 py-1 text-[15px] rounded-md font-mono  items-center
+                <button class="delete-btn text-white px-3 py-1 text-[12px] sm:text-[12px] md:text-[15px] lg:text-[15px] rounded-md font-mono  items-center
                    bg-red-900 dark:text-black dark:bg-red-700">Delete</button>
             `;
       listContainer?.appendChild(newItem);
@@ -146,6 +148,19 @@ document.addEventListener("DOMContentLoaded", function () {
         font-size: 18px;
         padding: 20px;
         list-style: none;
+    }
+
+    @media(max-width: 600px){
+        #list-items{
+            font-size:15px;
+            margin-right: 30px;
+        }
+
+       #list-container{
+        display:flex;
+        flex-direction: column;
+        justify-content: flex-start;
+       }
     }
 
 
