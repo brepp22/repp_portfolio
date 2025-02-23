@@ -15,11 +15,12 @@ let citySelect = [
 ---
 <div id ='weather-search'>
     <input
-        id="weather-input" class="w-full p-2 rounded-md border-gray-500 text-black h-12 mt-2 text-xs sm:xs md:text-base lg:text-lg"
+        id="weather-input" class="w-full p-2 rounded-md border-gray-500 text-black h-12 mt-2 text-xs sm:xs md:text-base lg:text-base"
         placeholder="Search Weather by City's Name..."
     />
 
-    <button id="search-button" class="dark:text-black bg-gray-800 dark:bg-slate-400 w-full p-2 mt-2 rounded-md h-10 text-sm sm:text-base md:text-lg lg:text-xl hover:text-blue-400 dark:hover:text-blue-900 ">Search</button>
+    <button id="search-button" class="dark:text-black bg-gray-800 dark:bg-slate-400 w-full p-2 mt-2 rounded-md h-10 text-sm sm:text-base md:text-base lg:text-lg
+    hover:text-blue-400 dark:hover:text-blue-900 ">Search</button>
    
 </div>
 
@@ -82,8 +83,8 @@ const fetchWeatherData = async (locationInput) => {
 
         // Daily Forecast (next 3 days)
         const dailyForecast = data.weather.slice(0, 3).map(day => `
-            <div class="daily-forecast bg-slate-700 rounded-lg p-4 mb-2 text-lg dark:text-black dark:bg-slate-300">
-                <h3 class="text-lg font-bold">${formatDate(day.date)}</h3>
+            <div class="daily-forecast bg-slate-700 rounded-lg p-4 mb-2 text-sm sm:text-base md:text-lg lg:text-xl dark:text-black dark:bg-slate-300">
+                <h3 class="text-sm sm:text-base md:text-lg lg:text-xl font-bold">${formatDate(day.date)}</h3>
                 <p>Average Temp: ${day.avgtempF} °F </p>
                 <p>Weather: ${getWeatherEmoji(day.hourly[0].weatherDesc[0].value)} ${day.hourly[0].weatherDesc[0].value}</p>
                 <p>Sunrise: ${day.astronomy[0].sunrise} | Sunset: ${day.astronomy[0].sunset}</p>
@@ -91,7 +92,7 @@ const fetchWeatherData = async (locationInput) => {
         `).join('');
 
         weatherInfo.innerHTML = `
-            <h2 class="weather-title text-2xl text-lg sm:text-lg md:text-2xl lg:text-2xl font-mono font-bold mt-4 mb-4 dark:text-black">${apiCityName}, ${apiState}</h2>
+            <h2 class="weather-title text-2xl text-lg sm:text-lg md:text-xl lg:text-2xl font-mono font-bold mt-4 mb-4 dark:text-black">${apiCityName}, ${apiState}</h2>
             <p class="text-white font-mono text-sm sm:text-base md:text-lg lg:text-xl dark:text-black">Current Temperature: ${current.temp_F} °F</p>
             <p class="text-white font-mono text-sm sm:text-base md:text-lg lg:text-xl dark:text-black">Feels Like: ${current.FeelsLikeF} °F</p>
             <p class="text-white font-mono text-sm sm:text-base md:text-lg lg:text-xl dark:text-black">
@@ -100,7 +101,8 @@ const fetchWeatherData = async (locationInput) => {
             <p class="text-white font-mono text-sm sm:text-base md:text-lg lg:text-xl dark:text-black">Humidity: ${current.humidity}%</p>
             <p class="text-white font-mono text-sm sm:text-base md:text-lg lg:text-xl dark:text-black">Wind Speed: ${current.windspeedMiles} mph</p>
             <div class="daily-forecasts mt-6">
-                <h3 class="text-2xl text-base sm:text-base md:text-2xl lg:text-3xl font-bold text-white dark:text-black">3-Day Forecast</h3>
+                <h3 class="text-2xl text-base sm:text-base md:text-xl lg:text-2xl font-bold text-white dark:text-black">3-Day Forecast</h3>
+                <br />
                 ${dailyForecast}
             </div>
         `;
@@ -243,7 +245,6 @@ weatherInput.addEventListener("keyup", (event) => {
   
     #weather-info p {
         margin: 10px 0; 
-        font-size: 25px;
     }
 
     #weather-input{
@@ -273,14 +274,14 @@ weatherInput.addEventListener("keyup", (event) => {
 
     @media (max-width: 600px){
     #weather-info {
-            width: 95%; 
-            max-width: 95%; 
-            margin: 10px auto;
+            width: 85%; 
+            max-width: 85%; 
             overflow: auto; 
         }
 
     #weather-info{
         color:red;
+        font-size: medium;
     }
   
     }
